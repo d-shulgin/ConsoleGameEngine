@@ -35,8 +35,14 @@ namespace lcg
         changeActiveBuffer();
         return;
     }
-    void Surface::render(const Scene* const) const
+    bool Surface::render( const Scene* const scene )
     {
+        if( nullptr != scene )
+        {
+            scene -> render( refBuffer(), &ScreenBuffer::put );
+            return( true );
+        }
+        return( false );
     }
 
 

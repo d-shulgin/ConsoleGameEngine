@@ -8,9 +8,10 @@
 
 int main()
 {
-    setlocale( LC_ALL, "Russian" );
+    //setlocale( LC_ALL, "Russian" );
     Game game( 120, 50 );
     game.init( lcg::SurfaceInitFlag::withDoubleBuffer );
+//    game.init( lcg::SurfaceInitFlag::withSingleBuffer );
     game.start();
     while( game.inProcess() )
     {

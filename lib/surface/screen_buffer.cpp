@@ -51,7 +51,6 @@ namespace lcg
         }
         /// @todo: need throw
     }
-
     void ScreenBuffer::updateBufferInfo()
     {
         if( nullptr != hScreenBuffer )
@@ -67,6 +66,19 @@ namespace lcg
             return;
         }
         /// @todo: need throw
+    }
+    void ScreenBuffer::put( const CHAR_INFO* buffer, COORD size, COORD pos )
+    {
+        if( nullptr != hScreenBuffer )
+        {
+            SMALL_RECT rect;
+            rect.Left   = pos.X;
+            rect.Right  = rect.Left + size.X - 1;
+            rect.Top    = pos.Y;
+            rect.Bottom = rect.Top + size.Y - 1;
+            WriteConsoleOutput( hScreenBuffer, buffer, size, {0, 0}, &rect );
+        }
+        return;
     }
     ScreenBuffer::~ScreenBuffer()
     {

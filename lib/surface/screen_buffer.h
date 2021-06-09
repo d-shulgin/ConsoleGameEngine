@@ -39,7 +39,6 @@ namespace lcg
             return( result );
         }
     };
-
     class ScreenBuffer final
     {
         HANDLE hScreenBuffer = nullptr;
@@ -70,6 +69,9 @@ namespace lcg
 
     private:
         void updateBufferInfo();
+
+    public: // render functions
+        void put( const CHAR_INFO* buffer, COORD size, COORD pos );
 
 
 

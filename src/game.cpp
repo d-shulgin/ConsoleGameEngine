@@ -7,6 +7,11 @@ Game::Game( int width, int height )
 }
 void Game::onInit()
 {
+    initMainMenu();
+    state.refLevel( LevelID::startedMainMenu )
+            .attachScene( &sceneStartApp )
+            .attachScene( &sceneMenu );
+
 //    std::cout << "after engine initialized..." << std::endl;
 //    std::cout << "surface size: w(" << getSurface().size().width << "); h("
 //              << getSurface().size().height << ")" << std::endl;
@@ -87,6 +92,32 @@ void Game::onInit()
 
     //    swapBuffers();
 }
+void Game::initMainMenu()
+{
+    lcg::Group* root;
+
+    sceneMenu.setRoot( root = new lcg::Group("root") );
+    root->setPosition( 10, 10 );
+    root->addChild( mainMenu[0] = new lcg::Text("MM_item01") );
+    root->addChild( mainMenu[1] = new lcg::Text("MM_item02") );
+    root->addChild( mainMenu[2] = new lcg::Text("MM_item03") );
+
+    mainMenu[0]->setData( Pos(0, 0), "This is test string.\nThis is second test string!!!", lcg::ColorID::light_sky );
+    mainMenu[1]->setData( Pos(0, 2), "Load",  lcg::ColorID::light_sky );
+    mainMenu[2]->setData( Pos(0, 4), "Exit",  lcg::ColorID::light_sky );
+
+//    if( scene.getRoot()->as<lcg::Group>() != nullptr )
+//    {
+//        std::cout << "children count: " << scene.getRoot()->as<lcg::Group>()->getChildren().size() << std::endl;
+//        const lcg::Text* item = scene.getRoot()->as<lcg::Group>()
+//                                ->getChild( "MM_item02" )->as<lcg::Text>();
+//        if( nullptr != item )
+//            std::cout << "select MM_item02: " << item->getData() << std::endl;
+//    }
+//    else
+//        std::cout << "can not convert View to Group" << std::endl;
+    return;
+}
 void Game::onStart()
 {
 }
@@ -95,4 +126,16 @@ void Game::onProcess()
 }
 void Game::onPostProcess()
 {
+}
+void Game::onPrepareDraw()
+{
+    state.refLevel( LevelID::startedMainMenu ).beginScene();
+}
+const lcg::Scene* Game::getScene() const
+{
+    return( state.crefLevel( LevelID::startedMainMenu ).getScene() );
+}
+void Game::nextScene()
+{
+    state.refLevel( LevelID::startedMainMenu ).nextScene();
 }

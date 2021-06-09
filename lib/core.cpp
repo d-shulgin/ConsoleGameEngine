@@ -47,8 +47,19 @@ namespace lcg
     }
     void Core::draw()
     {
-        /// @todo: need set scene
-        surface.render( nullptr );
+        onPrepareDraw();
+        coundScenesRendered = 0;
+        while( surface.render(getScene()) )
+        {
+            nextScene();
+            coundScenesRendered++;
+            if( coundScenesRendered > 1000 )
+            {
+                /// @todo: need throw
+                break;
+            }
+        }
+        Sleep( 10 );
         swapBuffers();
         return;
     }

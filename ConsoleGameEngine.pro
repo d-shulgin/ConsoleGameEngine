@@ -9,8 +9,14 @@ SOURCES += main.cpp \
     lib/core.cpp \
     lib/surface.cpp \
     lib/surface/screen_buffer.cpp \
-    lib/types/color.cpp \
-    lib/render/scene.cpp
+    lib/render/scene.cpp \
+    lib/render/group.cpp \
+    lib/render/view.cpp \
+    lib/render/text.cpp \
+    lib/types/position.cpp \
+    src/game_state.cpp \
+    src/level.cpp \
+    lib/render/sprite.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -19,5 +25,12 @@ HEADERS += \
     lib/surface.h \
     lib/surface/screen_buffer.h \
     lib/types/color.h \
-    lib/render/scene.h
+    lib/render/scene.h \
+    lib/render/group.h \
+    lib/render/view.h \
+    lib/render/text.h \
+    lib/types/position.h \
+    src/game_state.h \
+    src/level.h \
+    lib/render/sprite.h
 

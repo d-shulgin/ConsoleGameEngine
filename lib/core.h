@@ -21,7 +21,7 @@ namespace lcg
     class Core
     {
         HANDLE hConsole = nullptr;         // original active screen buffer
-        CONSOLE_SCREEN_BUFFER_INFOEX info; // original scrteen buffer info
+        CONSOLE_SCREEN_BUFFER_INFOEX info; // original screen buffer info
         int width = 0;  // default screen width
         int height = 0; // default screen height
 
@@ -57,10 +57,15 @@ namespace lcg
         virtual void onPostProcess(){}
 
     private: // rendering
-        Scene scene;
+        int coundScenesRendered = 0;
 
     public:
         void draw();
+
+    protected:
+        virtual void onPrepareDraw(){}
+        virtual const Scene* getScene() const{ return( nullptr ); }
+        virtual void nextScene(){}
     };
 }
 

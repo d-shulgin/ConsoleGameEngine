@@ -16,7 +16,8 @@ namespace lcg
 {
     enum class SurfaceInitFlag
     {
-        withDoubleBuffer = 0x00000001
+        withSingleBuffer = 0x00000000
+        , withDoubleBuffer = 0x00000001
     };
 
     class Surface final
@@ -58,7 +59,7 @@ namespace lcg
 
     public:
         void swapBuffers();
-        void render( const Scene* const ) const;
+        bool render( const Scene* const );
 
 
 
