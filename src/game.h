@@ -19,6 +19,8 @@ protected: // initialize
 private: // scene app started
     lcg::Scene sceneStartApp;
 
+    void initStartApp();
+
 private: // scene menu
     lcg::Scene sceneMenu;
     lcg::Text* mainMenu[3] = {nullptr};

@@ -2,7 +2,23 @@
 
 namespace lcg
 {
-    Sprite::Sprite()
+    Sprite::Sprite( const std::string& name )
+        : View( name )
+    {
+    }
+    void Sprite::render( ScreenBuffer& obj, View::RenderFnPtr fn ) const
+    {
+        if( image.getBuffer().size() > 0 )
+        {
+            Position pos = getGlobalPosition() + getPosition();
+            fn( obj
+                , &image.getBuffer()[0]
+                , {image.getWidth(), image.getHeight()}
+                , pos.asCOORD() );
+        }
+        return;
+    }
+    Sprite::~Sprite()
     {
     }
 }

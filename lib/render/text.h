@@ -7,11 +7,11 @@
 
 namespace lcg
 {
-    class Text : public View
+    class Text final : public View
     {
     public:
         explicit Text( const std::string& );
-        virtual ~Text();
+        ~Text();
 
         void setData( const Position&, const std::string&, const ColorID&, const ColorID& );
         void setData( const Position&, const std::string&, const ColorID& );

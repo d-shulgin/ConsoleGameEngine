@@ -103,6 +103,12 @@ namespace lcg
     }
     Text::~Text()
     {
+        if( nullptr != buffer )
+        {
+            delete[] buffer;
+            buffer = nullptr;
+            bufferSize = {0, 0};
+        }
         std::cout << "des... Text(" << getName() << ")" << std::endl;
     }
 }

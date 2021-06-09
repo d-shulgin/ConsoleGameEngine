@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     lib/types/position.cpp \
     src/game_state.cpp \
     src/level.cpp \
-    lib/render/sprite.cpp
+    lib/render/sprite.cpp \
+    lib/types/image.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -32,5 +33,6 @@ HEADERS += \
     lib/types/position.h \
     src/game_state.h \
     src/level.h \
-    lib/render/sprite.h
+    lib/render/sprite.h \
+    lib/types/image.h
 

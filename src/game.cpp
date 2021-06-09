@@ -7,6 +7,7 @@ Game::Game( int width, int height )
 }
 void Game::onInit()
 {
+    initStartApp();
     initMainMenu();
     state.refLevel( LevelID::startedMainMenu )
             .attachScene( &sceneStartApp )
@@ -92,19 +93,140 @@ void Game::onInit()
 
     //    swapBuffers();
 }
+
+void Game::initStartApp()
+{
+    lcg::Group* root = nullptr;
+    lcg::Sprite* logotype = nullptr;
+    lcg::Text* invitation = nullptr;
+
+    sceneStartApp.setRoot( root = new lcg::Group("root") );
+    root->setPosition(0, 0);
+    root->addChild( logotype = new lcg::Sprite("logotype") );
+    root->addChild( invitation = new lcg::Text("invitation") );
+
+    invitation->setData( Pos(44, 45), "PRESS (ENTER) KEY TO CONTINUE...", lcg::ColorID::white );
+
+    //  1234567890          1234567890          1234567890          1234567890          1234567890          12345
+    // "                  §§§§§§§              NNn                 AAAAa     AAa  KK       kKKKk   eEEEEe        "
+    lcg::Image logo( 105, 33 );
+    logo.beginSymbols()
+            .addSymbols("            §§§§§§§§§§§§§§§§§§                                                                           ")
+            .addSymbols("          §§§§§§§§§§§§§§§§§§§§§§§§                                                                       ")
+            .addSymbols("        §§§§§§§§§§§§§§§§§§§§§§§§§§§§                                                                     ")
+            .addSymbols("      §§§$§§§§§§         §§§§§§§§§§§§                                                                    ")
+            .addSymbols("      §§$§$§§§§              §§§§§§§§§                                                                   ")
+            .addSymbols("     §§$§§$§§§                §§§§§§§§                                                                   ")
+            .addSymbols("    §§$§§§§$§§§               §§§§§§§§                                                                   ")
+            .addSymbols("   §§$§§§§$§§§§               §§§§§§§§                                                                   ")
+            .addSymbols("   §§§$§§$§§§§               §§§§§§§§§                                                                   ")
+            .addSymbols("  (O)§§$§§(O)               §§§§§§§§§                                                                    ")
+            .addSymbols("   §§§$§$§§§               §§§§§§§§§                                                                     ")
+            .addSymbols("    §§§§§§§               §§§§§§§§§                                          KK                          ")
+            .addSymbols("   §§§§§§§               §§§§§§§§§                                          kKK                          ")
+            .addSymbols("    §§§§               §§§§§§§§§§                                           kKK                          ")
+            .addSymbols("     $               §§§§§§§§§§§                                            kKK                          ")
+            .addSymbols("    $              §§§§§§§§§§§                                              KKk                          ")
+            .addSymbols("    $            §§§§§§§§§§§                                                KKk                          ")
+            .addSymbols("   $           §§§§§§§§§§§                                                 kKKk                          ")
+            .addSymbols("  $ $        §§§§§§§§§§§                                                   kKK                 eEEEe     ")
+            .addSymbols("           §§§§§§§§§§§                                          aAAA       kKK      kKK       EEEEEE     ")
+            .addSymbols("         §§§§§§§§§§§                    NN                     AAAAAa      kKk     kKKK      EEEe EE     ")
+            .addSymbols("       §§§§§§§§§§§                      NN    nNNNn           AAAa aAA     kKk    KKKKk     EEe  eEE     ")
+            .addSymbols("     §§§§§§§§§§§                        NN   nNNNNNn         AAA    AA     KKk   KKKk      eEE   EEe     ")
+            .addSymbols("   §§§§§§§§§§§                          NN   NNn NNN        aAA     AA     KKk kKKKk       EEe eEEe      ")
+            .addSymbols("  §§§§§§§§§§§                           NN  NNn  nNNn      aAAa    aAA     KK kKKKk       eEE eEEe       ")
+            .addSymbols(" §§§§§§§§§§§                           nNN nNn    NNn      AAa     AAA     KKkKKKk        EEeeEEe        ")
+            .addSymbols(" §§§§§§§§§§§                           nNN NN     NNn     aAA     aAAA     KKKKKKk        EEEEE          ")
+            .addSymbols("  §§§§§§§§§§§                          nNnnNn     NNN     AAa    aAAAA    kKKkkKKKk       EEEe     eE    ")
+            .addSymbols("   §§§§§§§§§§§               §§§§§§§§  nNnNN      NNN     AA    aAAaAA    KKk  kKKKk      EE       EE    ")
+            .addSymbols("      §§§§§§§§§§§          §§§§§§§     NNnNn      nNNn    AA   aAAa AAa   KK    kKKKk     EEe    eEEe    ")
+            .addSymbols("          §§§§§§§§§§§§§§§§§§§§§        NNNN       nNNNNN  AAa aAAa  AAA   KK     kKKKk    EEEe eEEEe     ")
+            .addSymbols("              §§§§§§§§§§§§§§           NNNn        nNNNn  AAAAAAa   aAAA  KK      kKKKKK  eEEEEEEEe      ")
+            .addSymbols("                  §§§§§§§              NNn                 AAAAa     AAa  KK       kKKKk   eEEEEe        ");
+    logo.beginColors()
+            .addColors ("            GGGGGGGGGGGGGGGGGG                                                                           ")
+            .addColors ("          GGGGGGGGGGGGGGGGGGGGGGGG                                                                       ")
+            .addColors ("        GGGGGGGGGGGGGGGGGGGGGGGGGGGG                                                                     ")
+            .addColors ("      GGGGGGGGGG         GGGGGGGGGGGG                                                                    ")
+            .addColors ("      GGGGGGGGG              GGGGGGGGG                                                                   ")
+            .addColors ("     GGGGGGGGG                GGGGGGGG                                                                   ")
+            .addColors ("    GGGGGGGGGGG               GGGGGGGG                                                                   ")
+            .addColors ("   GGGGGGGGGGGG               GGGGGGGG                                                                   ")
+            .addColors ("   GGGGGGGGGGG               GGGGGGGGG                                                                   ")
+            .addColors ("  YYYGGGGGYYY               GGGGGGGGG                                                                    ")
+            .addColors ("   GGGGGGGGG               GGGGGGGGG                                                                     ")
+            .addColors ("    GGGGGGG               GGGGGGGGG                                          YY                          ")
+            .addColors ("   GGGGGGG               GGGGGGGGG                                          yYY                          ")
+            .addColors ("    GGGG               GGGGGGGGGG                                           yYY                          ")
+            .addColors ("     r               GGGGGGGGGGG                                            yYY                          ")
+            .addColors ("    r              GGGGGGGGGGG                                              YYy                          ")
+            .addColors ("    r            GGGGGGGGGGG                                                YYy                          ")
+            .addColors ("   r           GGGGGGGGGGG                                                 yYYy                          ")
+            .addColors ("  r r        GGGGGGGGGGG                                                   yYY                 yYYYy     ")
+            .addColors ("           GGGGGGGGGGG                                          yYYY       yYY      yYY       YYYYYY     ")
+            .addColors ("         GGGGGGGGGGG                    YY                     YYYYYy      yYy     yYYY      YYYy YY     ")
+            .addColors ("       GGGGGGGGGGG                      YY    yYYYy           YYYy yYY     yYy    YYYYy     YYy  yYY     ")
+            .addColors ("     GGGGGGGGGGG                        YY   yYYYYYy         YYY    YY     YYy   YYYy      yYY   YYy     ")
+            .addColors ("   GGGGGGGGGGG                          YY   YYy YYY        yYY     YY     YYy yYYYy       YYy yYYy      ")
+            .addColors ("  GGGGGGGGGGG                           YY  YYy  yYYy      yYYy    yYY     YY yYYYy       yYY yYYy       ")
+            .addColors (" GGGGGGGGGGG                           yYY yYy    YYy      YYy     YYY     YYyYYYy        YYyyYYy        ")
+            .addColors (" GGGGGGGGGGG                           yYY YY     YYy     yYY     yYYY     YYYYYYy        YYYYY          ")
+            .addColors ("  GGGGGGGGGGG                          yYyyYy     YYY     YYy    yYYYY    yYYyyYYYy       YYYy     yY    ")
+            .addColors ("   GGGGGGGGGGG               GGGGGGGG  yYyYY      YYY     YY    yYYyYY    YYy  yYYYy      YY       YY    ")
+            .addColors ("      GGGGGGGGGGG          GGGGGGG     YYyYy      yYYy    YY   yYYy YYy   YY    yYYYy     YYy    yYYy    ")
+            .addColors ("          GGGGGGGGGGGGGGGGGGGGG        YYYY       yYYYYY  YYy yYYy  YYY   YY     yYYYy    YYYy yYYYy     ")
+            .addColors ("              GGGGGGGGGGGGGG           YYYy        yYYYy  YYYYYYy   yYYY  YY      yYYYYY  yYYYYYYYy      ")
+            .addColors ("                  GGGGGGG              YYy                 YYYYy     YYy  YY       yYYYy   yYYYYy        ");
+    logotype->setImage( logo );
+    logotype->setPosition(7, 5);
+}
 void Game::initMainMenu()
 {
-    lcg::Group* root;
+    lcg::Group* root = nullptr;
+    lcg::Group* menu = nullptr;
+    lcg::Sprite* menuBgr = nullptr;
 
     sceneMenu.setRoot( root = new lcg::Group("root") );
-    root->setPosition( 10, 10 );
-    root->addChild( mainMenu[0] = new lcg::Text("MM_item01") );
-    root->addChild( mainMenu[1] = new lcg::Text("MM_item02") );
-    root->addChild( mainMenu[2] = new lcg::Text("MM_item03") );
+    root->setPosition( 49, 25 );
+    root->addChild( menuBgr = new lcg::Sprite("background") );
+    root->addChild( menu = new lcg::Group("menu") );
+    menu->setPosition(1, 4);
+    menu->addChild( mainMenu[0] = new lcg::Text("MM_item01") );
+    menu->addChild( mainMenu[1] = new lcg::Text("MM_item02") );
+    menu->addChild( mainMenu[2] = new lcg::Text("MM_item03") );
 
-    mainMenu[0]->setData( Pos(0, 0), "This is test string.\nThis is second test string!!!", lcg::ColorID::light_sky );
-    mainMenu[1]->setData( Pos(0, 2), "Load",  lcg::ColorID::light_sky );
-    mainMenu[2]->setData( Pos(0, 4), "Exit",  lcg::ColorID::light_sky );
+    mainMenu[0]->setData( Pos(0, 0), "       Start      ", lcg::ColorID::light_sky, lcg::ColorID::red );
+    mainMenu[1]->setData( Pos(0, 2), "       Load       ",  lcg::ColorID::light_sky );
+    mainMenu[2]->setData( Pos(0, 4), "       Exit       ",  lcg::ColorID::light_sky );
+
+    lcg::Image background( 20, 11 );
+    background.beginSymbols()
+            .addSymbols( "====================" )
+            .addSymbols( "|     Main menu    |" )
+            .addSymbols( "====================" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "|                  |" )
+            .addSymbols( "====================" );
+    background.beginColors()
+            .addColors( "RRRRRRRRRRRRRRRRRRRR" )
+            .addColors( "RGGGGGGGGGGGGGGGGGGR" )
+            .addColors( "RRRRRRRRRRRRRRRRRRRR" )
+            .addColors( "R                  R" )
+            .addColors( "R                  R" )
+            .addColors( "R                  R" )
+            .addColors( "R                  R" )
+            .addColors( "R                  R" )
+            .addColors( "R                  R" )
+            .addColors( "R                  R" )
+            .addColors( "RRRRRRRRRRRRRRRRRRRR" );
+    menuBgr->setImage( background );
+    menuBgr->setPosition(0, 0);
 
 //    if( scene.getRoot()->as<lcg::Group>() != nullptr )
 //    {
