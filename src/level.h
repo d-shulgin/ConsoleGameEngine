@@ -18,6 +18,8 @@ class Level
 public:
     Level();
 
+    void update( float );
+
 private: // scenes
     std::vector< const lcg::Scene* > scenes;
     int showScene = 0;

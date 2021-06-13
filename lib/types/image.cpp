@@ -106,7 +106,7 @@ namespace lcg
                         color = static_cast<WORD>(ColorID::black);
                         break;
                     }
-                    buffer[cursorBgColor].Attributes = (color << 4) | (buffer[cursorColor].Attributes & 0xFF0F);
+                    buffer[cursorBgColor].Attributes = (color << 4) | (buffer[cursorBgColor].Attributes & 0xFF0F);
                     ++cursorBgColor %= buffer.size();
                 }
             }

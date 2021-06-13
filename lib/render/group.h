@@ -10,7 +10,7 @@ namespace lcg
     class Group : public View
     {
     public:
-        explicit Group( const std::string& );
+        explicit Group( const std::string& = "" );
         virtual ~Group();
 
     protected: // change position

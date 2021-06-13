@@ -12,5 +12,7 @@
 #include "render/group.h"
 #include "render/text.h"
 #include "render/sprite.h"
+// game components
+#include "game/animation.h"
 
 #endif // ENGINE_H

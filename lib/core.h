@@ -48,12 +48,12 @@ namespace lcg
     public:
         void start();
         bool inProcess() const { return( isStarted ); }
-        void process();
+        void process( float, DWORD, DWORD );
         void postProcess();
 
     protected:
         virtual void onStart(){}
-        virtual void onProcess(){}
+        virtual void onProcess( float, DWORD, DWORD ){}
         virtual void onPostProcess(){}
 
     private: // rendering

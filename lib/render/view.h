@@ -12,7 +12,7 @@ namespace lcg
     class View
     {
     public:
-        explicit View( const std::string& );
+        explicit View( const std::string& = "" );
         virtual ~View();
 
         template< typename T >

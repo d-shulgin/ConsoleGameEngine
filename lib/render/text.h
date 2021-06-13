@@ -10,7 +10,7 @@ namespace lcg
     class Text final : public View
     {
     public:
-        explicit Text( const std::string& );
+        explicit Text( const std::string& = "" );
         ~Text();
 
         void setData( const Position&, const std::string&, const ColorID&, const ColorID& );

@@ -3,6 +3,9 @@
 Level::Level()
 {
 }
+void Level::update( float dt )
+{
+}
 void Level::beginScene()
 {
     showScene = 0;

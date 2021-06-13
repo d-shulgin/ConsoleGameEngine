@@ -1,7 +1,6 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <windows.h>
 #include "view.h"
 #include "../types/image.h"
 
@@ -30,7 +29,7 @@ namespace lcg
     class Sprite final : public View
     {
     public:
-        explicit Sprite( const std::string& );
+        explicit Sprite( const std::string& = "" );
         ~Sprite();
 
     private: // align
@@ -41,10 +40,10 @@ namespace lcg
         void setAlign( const SpriteAlign& a ){ align = a; }
 
     private: // image
-        Image image;
+        const Image* image = nullptr;
 
     public:
-        void setImage( const Image& img ){ image = img; }
+        void setImage( const Image* img ){ image = img; }
 
     public: // render
         virtual void render( ScreenBuffer&, RenderFnPtr ) const override;

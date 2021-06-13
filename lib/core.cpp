@@ -35,9 +35,9 @@ namespace lcg
         onStart();
         return;
     }
-    void Core::process()
+    void Core::process( float dt, DWORD delta, DWORD ticks )
     {
-        onProcess();
+        onProcess( dt, delta, ticks );
         return;
     }
     void Core::postProcess()
@@ -59,7 +59,7 @@ namespace lcg
                 break;
             }
         }
-        Sleep( 10 );
+        //Sleep( 10 );
         swapBuffers();
         return;
     }
