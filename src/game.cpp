@@ -10,11 +10,22 @@ void Game::onInit()
     fps.reset();
     state.init();
     _scene_startApp.init();
+    _scene_Debug.init();
+
+    handlerStartMenu.setDebug( &_scene_Debug );
+    action_StartMenu.setKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(VK_RETURN)}) );
+    action_StartMenu.setCallback( &handlerStartMenu );
+    action_StartMenu.setActive( true );
+    refInput().attach( &action_StartMenu );
 }
 void Game::onStart()
 {
     _scene_startApp.build();
-    state.level_StartApp().attach( &_scene_startApp );
+    _scene_Debug.build();
+
+    state.level_StartApp()
+            .attach( &_scene_startApp )
+            .attach( &_scene_Debug );
 }
 void Game::onProcess( float dt )
 {
@@ -1019,3 +1030,15 @@ void Game::nextScene()
     state.refLevel( LevelID::startedMainMenu ).nextScene();
 }
 #endif // DEPRECATED
+
+
+void Game::Handler_StartMenu::onPress()
+{
+    if( debug )
+        debug->setText( "Game::Handler_StartMenu::onPress" );
+}
+void Game::Handler_StartMenu::onRelease()
+{
+    if( debug )
+        debug->setText( "Game::Handler_StartMenu::onRelease" );
+}

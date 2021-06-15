@@ -21,6 +21,15 @@ namespace lcg
             }
             return( nullptr );
         }
+        template< typename T >
+        const T* as_const() const
+        {
+            if( typeid(T).before(typeid(*this)) || typeid(T) == typeid(*this) )
+            {
+                return( dynamic_cast<const T*>(this) );
+            }
+            return( nullptr );
+        }
 
         virtual const Scene* scene() const { return( nullptr ); }
 

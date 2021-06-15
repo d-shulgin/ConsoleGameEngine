@@ -42,6 +42,7 @@ namespace lcg
     }
     void Core::postProcess()
     {
+        refInput().postProcess();
         onPostProcess();
         return;
     }

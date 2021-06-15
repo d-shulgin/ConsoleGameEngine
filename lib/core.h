@@ -15,6 +15,7 @@
 #include <windows.h>
 #include "surface.h"
 #include "render/scene.h"
+#include "input/user_input.h"
 
 namespace lcg
 {
@@ -65,6 +66,15 @@ namespace lcg
     protected:
         virtual void onPrepareDraw(){}
         virtual const Scene* getScene() { return( nullptr ); }
+
+    private: // user input
+        UserInput input;
+
+    protected:
+        UserInput& refInput() { return( input ); }
+
+    public:
+        const UserInput& getInput() const { return( input ); }
     };
 }
 

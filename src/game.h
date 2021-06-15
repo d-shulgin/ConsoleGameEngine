@@ -4,6 +4,7 @@
 #include "../lib/engine.h"
 #include "snake_state.h"
 #include "scenes/package.h"
+#include "actions/action_start_menu.h"
 
 class Game final : public lcg::Core
 {
@@ -35,6 +36,24 @@ private: // state
 
 private: // scenes
     SceneStart _scene_startApp;
+    SceneDebug _scene_Debug;
+
+private: // actions
+    Action_StartMenu action_StartMenu;
+
+    class Handler_StartMenu final : public lcg::Action::Callback
+    {
+        SceneDebug* debug = nullptr;
+    public:
+        Handler_StartMenu()
+            : lcg::Action::Callback()
+        {}
+
+        virtual void onPress() override;
+        virtual void onRelease() override;
+
+        void setDebug( SceneDebug* scene ){ debug = scene; }
+    } handlerStartMenu;
 
 
 

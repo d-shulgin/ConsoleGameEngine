@@ -23,7 +23,13 @@ SOURCES += main.cpp \
     src/scenes/scene_start.cpp \
     lib/game/scene_builder.cpp \
     lib/game/game_state.cpp \
-    src/snake_state.cpp
+    src/snake_state.cpp \
+    lib/game/action.cpp \
+    src/actions/action_start_menu.cpp \
+    lib/input/vkey.cpp \
+    lib/input/keyboard_shortcut.cpp \
+    lib/input/user_input.cpp \
+    src/scenes/scene_debug.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -48,5 +54,11 @@ HEADERS += \
     lib/game/scene_builder.h \
     lib/game/game_state.h \
     src/snake_state.h \
-    src/levels/package.h
+    src/levels/package.h \
+    lib/game/action.h \
+    src/actions/action_start_menu.h \
+    lib/input/vkey.h \
+    lib/input/keyboard_shortcut.h \
+    lib/input/user_input.h \
+    src/scenes/scene_debug.h
 

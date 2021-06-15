@@ -17,6 +17,11 @@
 #include "game/scene_builder.h"
 #include "game/animation.h"
 #include "game/game_state.h"
+#include "game/action.h"
+// input
+#include "input/vkey.h"
+#include "input/keyboard_shortcut.h"
+#include "input/user_input.h"
 // utilities
 #include "utils/fps_counter.h"
 

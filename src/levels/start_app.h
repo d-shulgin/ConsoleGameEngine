@@ -10,7 +10,8 @@ public:
     virtual ~StartApp();
 
 public: // name
-    virtual std::string getName() const override { return( "StartApp" ); }
+    static std::string class_name() { return( "StartApp" ); }
+    virtual std::string getName() const override { return( class_name() ); }
 
 protected: // choice
     virtual void onActivate() override;
