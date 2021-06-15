@@ -56,9 +56,12 @@ namespace lcg
     }
     void Group::render( ScreenBuffer& obj, RenderFnPtr fn ) const
     {
-        for( auto child: getChildren() )
-            if( nullptr != child )
-                child -> render( obj, fn );
+        if( getVisible() )
+        {
+            for( auto child: getChildren() )
+                if( nullptr != child )
+                    child -> render( obj, fn );
+        }
         return;
     }
     Group::~Group()

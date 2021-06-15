@@ -13,6 +13,11 @@
 #include "render/text.h"
 #include "render/sprite.h"
 // game components
+#include "game/level.h"
+#include "game/scene_builder.h"
 #include "game/animation.h"
+#include "game/game_state.h"
+// utilities
+#include "utils/fps_counter.h"
 
 #endif // ENGINE_H

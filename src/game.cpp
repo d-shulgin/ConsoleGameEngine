@@ -7,6 +7,50 @@ Game::Game( int width, int height )
 }
 void Game::onInit()
 {
+    fps.reset();
+    state.init();
+    _scene_startApp.init();
+}
+void Game::onStart()
+{
+    _scene_startApp.build();
+    state.level_StartApp().attach( &_scene_startApp );
+}
+void Game::onProcess( float dt )
+{
+    fps.update( dt );
+    state.currentLevelProcess( dt );
+    return;
+}
+void Game::onPrepareDraw()
+{
+    state.prepareDraw();
+    return;
+}
+const lcg::Scene* Game::getScene()
+{
+    const lcg::SceneBuilder* builder = state.getScene();
+    if( nullptr != builder )
+        return( builder -> scene() );
+    return( nullptr );
+}
+void Game::onPostProcess()
+{
+}
+
+
+
+
+
+
+
+
+
+
+
+#ifdef DEPRECATED
+void Game::onInit()
+{
     initStartApp();
     initMainMenu();
     state.refLevel( LevelID::startedMainMenu )
@@ -933,7 +977,7 @@ void Game::onStart()
     testAnim.start();
     timeInvitation = 5.0f;
 }
-void Game::onProcess( float dt, DWORD delta, DWORD ticks )
+void Game::onProcess( float dt )
 {
     char str[100];
 
@@ -942,7 +986,7 @@ void Game::onProcess( float dt, DWORD delta, DWORD ticks )
     if( nullptr != test )
         test ->setImage( testAnim.getImage() );
 
-    sprintf( str, "dt = %f, delta = %d, ticks = %d, frame = %d(%d)", dt, delta, ticks, testAnim.getFrame(), testAnim.getImages().size() );
+    sprintf( str, "dt = %f, frame = %d(%d)", dt, testAnim.getFrame(), testAnim.getImages().size() );
     conOut ->setString( std::string(str) );
 
     if( timeInvitation > 0.0f )
@@ -974,3 +1018,4 @@ void Game::nextScene()
 {
     state.refLevel( LevelID::startedMainMenu ).nextScene();
 }
+#endif // DEPRECATED

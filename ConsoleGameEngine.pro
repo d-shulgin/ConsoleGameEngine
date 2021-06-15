@@ -14,11 +14,16 @@ SOURCES += main.cpp \
     lib/render/view.cpp \
     lib/render/text.cpp \
     lib/types/position.cpp \
-    src/game_state.cpp \
-    src/level.cpp \
     lib/render/sprite.cpp \
     lib/types/image.cpp \
-    lib/game/animation.cpp
+    lib/game/animation.cpp \
+    lib/utils/fps_counter.cpp \
+    lib/game/level.cpp \
+    src/levels/start_app.cpp \
+    src/scenes/scene_start.cpp \
+    lib/game/scene_builder.cpp \
+    lib/game/game_state.cpp \
+    src/snake_state.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -32,9 +37,16 @@ HEADERS += \
     lib/render/view.h \
     lib/render/text.h \
     lib/types/position.h \
-    src/game_state.h \
-    src/level.h \
     lib/render/sprite.h \
     lib/types/image.h \
-    lib/game/animation.h
+    lib/game/animation.h \
+    lib/utils/fps_counter.h \
+    lib/game/level.h \
+    src/levels/start_app.h \
+    src/scenes/scene_start.h \
+    src/scenes/package.h \
+    lib/game/scene_builder.h \
+    lib/game/game_state.h \
+    src/snake_state.h \
+    src/levels/package.h
 

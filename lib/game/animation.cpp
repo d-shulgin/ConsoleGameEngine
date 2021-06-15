@@ -69,11 +69,11 @@ namespace lcg
     const Image* Animation::getImage() const
     {
         if( getFrame() < getImages().size() )
-            return( &getImages()[getFrame()] );
+            return( getImages()[getFrame()] );
         /// @todo: need throw
         return( nullptr );
     }
-    Animation& Animation::addImage( const Image& image )
+    Animation& Animation::addImage( const Image* const image )
     {
         images.push_back( image );
     }

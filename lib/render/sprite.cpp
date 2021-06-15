@@ -8,13 +8,16 @@ namespace lcg
     }
     void Sprite::render( ScreenBuffer& obj, View::RenderFnPtr fn ) const
     {
-        if( nullptr != image && image->getBuffer().size() > 0 )
+        if( getVisible() )
         {
-            Position pos = getGlobalPosition() + getPosition();
-            fn( obj
-                , &image->getBuffer()[0]
-                , {image->getWidth(), image->getHeight()}
+            if( nullptr != image && image->getBuffer().size() > 0 )
+            {
+                Position pos = getGlobalPosition() + getPosition();
+                fn( obj
+                    , &image->getBuffer()[0]
+                        , {image->getWidth(), image->getHeight()}
                 , pos.asCOORD() );
+            }
         }
         return;
     }

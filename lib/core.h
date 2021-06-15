@@ -46,26 +46,25 @@ namespace lcg
         bool isStarted = false;
 
     public:
-        void start();
         bool inProcess() const { return( isStarted ); }
-        void process( float, DWORD, DWORD );
+        void start();
+        void process( float );
         void postProcess();
 
     protected:
         virtual void onStart(){}
-        virtual void onProcess( float, DWORD, DWORD ){}
+        virtual void onProcess( float ){}
         virtual void onPostProcess(){}
 
     private: // rendering
-        int coundScenesRendered = 0;
+        int countScenesRendered = 0;
 
     public:
         void draw();
 
     protected:
         virtual void onPrepareDraw(){}
-        virtual const Scene* getScene() const{ return( nullptr ); }
-        virtual void nextScene(){}
+        virtual const Scene* getScene() { return( nullptr ); }
     };
 }
 

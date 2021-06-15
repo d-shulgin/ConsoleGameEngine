@@ -50,14 +50,14 @@ namespace lcg
         void setRestartFrame( size_t v ) { restartFrame = v % getImages().size(); }
 
     private: // images
-        std::vector< Image > images;
+        std::vector< const Image* > images;
         size_t frame = 0;
 
     public:
-        const std::vector< Image >& getImages() const { return( images ); }
+        const std::vector< const Image* >& getImages() const { return( images ); }
         size_t getFrame() const { return( frame ); }
         const Image* getImage() const;
-        Animation& addImage( const Image& );
+        Animation& addImage( const Image* const );
     };
 }
 

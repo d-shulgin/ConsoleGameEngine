@@ -35,9 +35,9 @@ namespace lcg
         onStart();
         return;
     }
-    void Core::process( float dt, DWORD delta, DWORD ticks )
+    void Core::process( float dt )
     {
-        onProcess( dt, delta, ticks );
+        onProcess( dt );
         return;
     }
     void Core::postProcess()
@@ -48,18 +48,17 @@ namespace lcg
     void Core::draw()
     {
         onPrepareDraw();
-        coundScenesRendered = 0;
+        countScenesRendered = 0;
         while( surface.render(getScene()) )
         {
-            nextScene();
-            coundScenesRendered++;
-            if( coundScenesRendered > 1000 )
+            countScenesRendered++;
+            if( countScenesRendered > 1000 ) /// @todo: magic number
             {
                 /// @todo: need throw
                 break;
             }
         }
-        //Sleep( 10 );
+        Sleep( 10 ); // sleep on 10 milliseconds
         swapBuffers();
         return;
     }

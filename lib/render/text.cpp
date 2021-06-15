@@ -94,10 +94,13 @@ namespace lcg
     }
     void Text::render( ScreenBuffer& obj, RenderFnPtr fn ) const
     {
-        if( nullptr != buffer )
+        if( getVisible() )
         {
-            Position pos = getGlobalPosition() + getPosition();
-            fn( obj, buffer, bufferSize, pos.asCOORD() );
+            if( nullptr != buffer )
+            {
+                Position pos = getGlobalPosition() + getPosition();
+                fn( obj, buffer, bufferSize, pos.asCOORD() );
+            }
         }
         return;
     }
