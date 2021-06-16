@@ -6,9 +6,10 @@ namespace lcg
     GameState::GameState()
     {
     }
-    void GameState::init()
+    void GameState::init( UserInput& ui )
     {
         levels.clear();
+        input = &ui;
         onInit();
         return;
     }
@@ -24,26 +25,44 @@ namespace lcg
         else
         {
             if( levels.empty() )
+            {
+                _activeLevel = level;
                 level -> activate();
+            }
             levels.push_back( level );
         }
         return;
     }
     Level* GameState::currentLevel()
     {
-        /// @todo: need logic choices level
-        if( !levels.empty() )
-            return( levels[0] );
+        if( nullptr != _activeLevel )
+            return( _activeLevel );
         /// @todo: throw
         return( nullptr );
     }
     const Level* GameState::getCurrentLevel() const
     {
-        /// @todo: need logic choices level
-        if( !levels.empty() )
-            return( levels[0] );
+        if( nullptr != _activeLevel )
+            return( _activeLevel );
         /// @todo: throw
         return( nullptr );
+    }
+    void GameState::launch( const std::string& nameLevel )
+    {
+        if( nameLevel.length() > 0
+            && currentLevel()->getName() != nameLevel )
+        {
+            auto it = std::find_if( levels.begin()
+                                    , levels.end()
+                                    , [&nameLevel](Level* i)->bool{ return(i->getName() == nameLevel); } );
+            if( it != levels.end() )
+            {
+                currentLevel()->deactivate();
+                _activeLevel = *it;
+                currentLevel()->activate();
+            }
+        }
+        return;
     }
     void GameState::prepareDraw()
     {

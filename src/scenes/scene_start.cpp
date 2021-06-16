@@ -139,39 +139,39 @@ void SceneStart::Resources::load()
         _logo = lcg::Image( 120, 50 );
 
         /*
-        |           §§§§§§§§§§§§§§§§§§        ||        §§§§§§§§§§§§§§§§§§           |o
-        |         §§§§§§§§§§§§§§§§§§§§§§§§    ||    §§§§§§§§§§§§§§§§§§§§§§§§         |o
-        |       §§§§§§§§§§§§§§§§§§§§§§§§§§§§  ||  §§§§§§§§§§§§§§§§§§§§§§§§§§§§       |o
-        |     §§§$§§§§§§         §§§§§§§§§§§§ || §§§§§§§§§§§§         §§§§§§$§§§     |o
-        |     §§$§$§§§§              §§§§§§§§§||§§§§§§§§§              §§§§$§$§§     |o
-        |    §§$§§$§§§                §§§§§§§§||§§§§§§§§                §§§$§§$§§    |o
-        |   §§$§§§§$§§§               §§§§§§§§||§§§§§§§§               §§§$§§§§$§§   |o
-        |  §§$§§§§$§§§§               §§§§§§§§||§§§§§§§§               §§§§$§§§§$§§  |o
-        |  §§§$§§$§§§§               §§§§§§§§§||§§§§§§§§§               §§§§$§§$§§§  |o
-        | (O)§§$§§(O)               §§§§§§§§§ || §§§§§§§§§               (O)§§$§§(O) |o
-        |  §§§$§$§§§               §§§§§§§§§  ||  §§§§§§§§§               §§§$§$§§§  |o
-        |   §§§§§§§               §§§§§§§§§   ||   §§§§§§§§§               §§§§§§§   |o
-        |  §§§§§§§               §§§§§§§§§    ||    §§§§§§§§§               §§§§§§§  |o
-        |   §§§§               §§§§§§§§§§     ||     §§§§§§§§§§               §§§§   |o
-        |    $               §§§§§§§§§§§      ||      §§§§§§§§§§§               $    |o
-        |   $              §§§§§§§§§§§        ||        §§§§§§§§§§§              $   |o
-        |   $            §§§§§§§§§§§          ||          §§§§§§§§§§§            $   |o
-        |  $           §§§§§§§§§§§            ||            §§§§§§§§§§§           $  |o
-        | $ $        §§§§§§§§§§§              ||              §§§§§§§§§§§        $ $ |o
-        |          §§§§§§§§§§§                ||                §§§§§§§§§§§          |o
-        |        §§§§§§§§§§§                  ||                  §§§§§§§§§§§        |o
-        |      §§§§§§§§§§§                    ||                    §§§§§§§§§§§      |o
-        |    §§§§§§§§§§§                      ||                      §§§§§§§§§§§    |o
-        |  §§§§§§§§§§§                        ||                        §§§§§§§§§§§  |o
-        | §§§§§§§§§§§                         ||                         §§§§§§§§§§§ |o
-        |§§§§§§§§§§§                          ||                          §§§§§§§§§§§|o
-        |§§§§§§§§§§§                          ||                          §§§§§§§§§§§|o
-        | §§§§§§§§§§§                         ||                         §§§§§§§§§§§ |o
-        |  §§§§§§§§§§§               §§§§§§§§ || §§§§§§§§               §§§§§§§§§§§  |o
-        |     §§§§§§§§§§§          §§§§§§§    ||    §§§§§§§          §§§§§§§§§§§     |o
-        |         §§§§§§§§§§§§§§§§§§§§§       ||       §§§§§§§§§§§§§§§§§§§§§         |o
-        |             §§§§§§§§§§§§§§          ||          §§§§§§§§§§§§§§             |o
-        |                 §§§§§§§             ||             §§§§§§§                 |o
+        |           SSSSSSSSSSSSSSSSSS        ||        SSSSSSSSSSSSSSSSSS           |o
+        |         SSSSSSSSSSSSSSSSSSSSSSSS    ||    SSSSSSSSSSSSSSSSSSSSSSSS         |o
+        |       SSSSSSSSSSSSSSSSSSSSSSSSSSSS  ||  SSSSSSSSSSSSSSSSSSSSSSSSSSSS       |o
+        |     SSS$SSSSSS         SSSSSSSSSSSS || SSSSSSSSSSSS         SSSSSS$SSS     |o
+        |     SS$S$SSSS              SSSSSSSSS||SSSSSSSSS              SSSS$S$SS     |o
+        |    SS$SS$SSS                SSSSSSSS||SSSSSSSS                SSS$SS$SS    |o
+        |   SS$SSSS$SSS               SSSSSSSS||SSSSSSSS               SSS$SSSS$SS   |o
+        |  SS$SSSS$SSSS               SSSSSSSS||SSSSSSSS               SSSS$SSSS$SS  |o
+        |  SSS$SS$SSSS               SSSSSSSSS||SSSSSSSSS               SSSS$SS$SSS  |o
+        | (O)SS$SS(O)               SSSSSSSSS || SSSSSSSSS               (O)SS$SS(O) |o
+        |  SSS$S$SSS               SSSSSSSSS  ||  SSSSSSSSS               SSS$S$SSS  |o
+        |   SSSSSSS               SSSSSSSSS   ||   SSSSSSSSS               SSSSSSS   |o
+        |  SSSSSSS               SSSSSSSSS    ||    SSSSSSSSS               SSSSSSS  |o
+        |   SSSS               SSSSSSSSSS     ||     SSSSSSSSSS               SSSS   |o
+        |    $               SSSSSSSSSSS      ||      SSSSSSSSSSS               $    |o
+        |   $              SSSSSSSSSSS        ||        SSSSSSSSSSS              $   |o
+        |   $            SSSSSSSSSSS          ||          SSSSSSSSSSS            $   |o
+        |  $           SSSSSSSSSSS            ||            SSSSSSSSSSS           $  |o
+        | $ $        SSSSSSSSSSS              ||              SSSSSSSSSSS        $ $ |o
+        |          SSSSSSSSSSS                ||                SSSSSSSSSSS          |o
+        |        SSSSSSSSSSS                  ||                  SSSSSSSSSSS        |o
+        |      SSSSSSSSSSS                    ||                    SSSSSSSSSSS      |o
+        |    SSSSSSSSSSS                      ||                      SSSSSSSSSSS    |o
+        |  SSSSSSSSSSS                        ||                        SSSSSSSSSSS  |o
+        | SSSSSSSSSSS                         ||                         SSSSSSSSSSS |o
+        |SSSSSSSSSSS                          ||                          SSSSSSSSSSS|o
+        |SSSSSSSSSSS                          ||                          SSSSSSSSSSS|o
+        | SSSSSSSSSSS                         ||                         SSSSSSSSSSS |o
+        |  SSSSSSSSSSS               SSSSSSSS || SSSSSSSS               SSSSSSSSSSS  |o
+        |     SSSSSSSSSSS          SSSSSSS    ||    SSSSSSS          SSSSSSSSSSS     |o
+        |         SSSSSSSSSSSSSSSSSSSSS       ||       SSSSSSSSSSSSSSSSSSSSS         |o
+        |             SSSSSSSSSSSSSS          ||          SSSSSSSSSSSSSS             |o
+        |                 SSSSSSS             ||             SSSSSSS                 |o
 
         |           GGGGGGGGGGGGGGGGGG        ||        GGGGGGGGGGGGGGGGGG           |o
         |         GGGGGGGGGGGGGGGGGGGGGGGG    ||    GGGGGGGGGGGGGGGGGGGGGGGG         |o
@@ -213,39 +213,39 @@ void SceneStart::Resources::load()
                 .addSymbols("                                                                                                                        ")
                 .addSymbols("                                                                                                                        ")
                 .addSymbols("                                                                                                                        ")
-                .addSymbols("       |        §§§§§§§§§§§§§§§§§§           |                                                                          ")
-                .addSymbols("       |    §§§§§§§§§§§§§§§§§§§§§§§§         |                                                                          ")
-                .addSymbols("       |  §§§§§§§§§§§§§§§§§§§§§§§§§§§§       |                                                                          ")
-                .addSymbols("       | §§§§§§§§§§§§         §§§§§§$§§§     |                                                                          ")
-                .addSymbols("       |§§§§§§§§§              §§§§$§$§§     |                                                                          ")
-                .addSymbols("       |§§§§§§§§                §§§$§§$§§    |                                                                          ")
-                .addSymbols("       |§§§§§§§§               §§§$§§§§$§§   |                                                                          ")
-                .addSymbols("       |§§§§§§§§               §§§§$§§§§$§§  |                                                                          ")
-                .addSymbols("       |§§§§§§§§§               §§§§$§§$§§§  |                                                                          ")
-                .addSymbols("       | §§§§§§§§§               (O)§§$§§(O) |                                                                          ")
-                .addSymbols("       |  §§§§§§§§§               §§§$§$§§§  |                                                                          ")
-                .addSymbols("       |   §§§§§§§§§               §§§§§§§   |                                      KK                                  ")
-                .addSymbols("       |    §§§§§§§§§               §§§§§§§  |                                     kKK                                  ")
-                .addSymbols("       |     §§§§§§§§§§               §§§§   |                                     kKK                                  ")
-                .addSymbols("       |      §§§§§§§§§§§               $    |                                     kKK                                  ")
-                .addSymbols("       |        §§§§§§§§§§§              $   |                                     KKk                                  ")
-                .addSymbols("       |          §§§§§§§§§§§            $   |                                     KKk                                  ")
-                .addSymbols("       |            §§§§§§§§§§§           $  |                                    kKKk                                  ")
-                .addSymbols("       |              §§§§§§§§§§§        $ $ |                                    kKK                 eEEEe             ")
-                .addSymbols("       |                §§§§§§§§§§§          |                         aAAA       kKK      kKK       EEEEEE             ")
-                .addSymbols("       |                  §§§§§§§§§§§        | NN                     AAAAAa      kKk     kKKK      EEEe EE             ")
-                .addSymbols("       |                    §§§§§§§§§§§      | NN    nNNNn           AAAa aAA     kKk    KKKKk     EEe  eEE             ")
-                .addSymbols("       |                      §§§§§§§§§§§    | NN   nNNNNNn         AAA    AA     KKk   KKKk      eEE   EEe             ")
-                .addSymbols("       |                        §§§§§§§§§§§  | NN   NNn NNN        aAA     AA     KKk kKKKk       EEe eEEe              ")
-                .addSymbols("       |                         §§§§§§§§§§§ | NN  NNn  nNNn      aAAa    aAA     KK kKKKk       eEE eEEe               ")
-                .addSymbols("       |                          §§§§§§§§§§§|nNN nNn    NNn      AAa     AAA     KKkKKKk        EEeeEEe                ")
-                .addSymbols("       |                          §§§§§§§§§§§|nNN NN     NNn     aAA     aAAA     KKKKKKk        EEEEE                  ")
-                .addSymbols("       |                         §§§§§§§§§§§ |nNnnNn     NNN     AAa    aAAAA    kKKkkKKKk       EEEe     eE            ")
-                .addSymbols("       | §§§§§§§§               §§§§§§§§§§§  |nNnNN      NNN     AA    aAAaAA    KKk  kKKKk      EE       EE            ")
-                .addSymbols("       |    §§§§§§§          §§§§§§§§§§§     |NNnNn      nNNn    AA   aAAa AAa   KK    kKKKk     EEe    eEEe            ")
-                .addSymbols("       |       §§§§§§§§§§§§§§§§§§§§§         |NNNN       nNNNNN  AAa aAAa  AAA   KK     kKKKk    EEEe eEEEe             ")
-                .addSymbols("       |          §§§§§§§§§§§§§§             |NNNn        nNNNn  AAAAAAa   aAAA  KK      kKKKKK  eEEEEEEEe              ")
-                .addSymbols("       |             §§§§§§§                 |NNn                 AAAAa     AAa  KK       kKKKk   eEEEEe                ")
+                .addSymbols("       |        SSSSSSSSSSSSSSSSSS           |                                                                          ")
+                .addSymbols("       |    SSSSSSSSSSSSSSSSSSSSSSSS         |                                                                          ")
+                .addSymbols("       |  SSSSSSSSSSSSSSSSSSSSSSSSSSSS       |                                                                          ")
+                .addSymbols("       | SSSSSSSSSSSS         SSSSSS$SSS     |                                                                          ")
+                .addSymbols("       |SSSSSSSSS              SSSS$S$SS     |                                                                          ")
+                .addSymbols("       |SSSSSSSS                SSS$SS$SS    |                                                                          ")
+                .addSymbols("       |SSSSSSSS               SSS$SSSS$SS   |                                                                          ")
+                .addSymbols("       |SSSSSSSS               SSSS$SSSS$SS  |                                                                          ")
+                .addSymbols("       |SSSSSSSSS               SSSS$SS$SSS  |                                                                          ")
+                .addSymbols("       | SSSSSSSSS               (O)SS$SS(O) |                                                                          ")
+                .addSymbols("       |  SSSSSSSSS               SSS$S$SSS  |                                                                          ")
+                .addSymbols("       |   SSSSSSSSS               SSSSSSS   |                                      KK                                  ")
+                .addSymbols("       |    SSSSSSSSS               SSSSSSS  |                                     kKK                                  ")
+                .addSymbols("       |     SSSSSSSSSS               SSSS   |                                     kKK                                  ")
+                .addSymbols("       |      SSSSSSSSSSS               $    |                                     kKK                                  ")
+                .addSymbols("       |        SSSSSSSSSSS              $   |                                     KKk                                  ")
+                .addSymbols("       |          SSSSSSSSSSS            $   |                                     KKk                                  ")
+                .addSymbols("       |            SSSSSSSSSSS           $  |                                    kKKk                                  ")
+                .addSymbols("       |              SSSSSSSSSSS        $ $ |                                    kKK                 eEEEe             ")
+                .addSymbols("       |                SSSSSSSSSSS          |                         aAAA       kKK      kKK       EEEEEE             ")
+                .addSymbols("       |                  SSSSSSSSSSS        | NN                     AAAAAa      kKk     kKKK      EEEe EE             ")
+                .addSymbols("       |                    SSSSSSSSSSS      | NN    nNNNn           AAAa aAA     kKk    KKKKk     EEe  eEE             ")
+                .addSymbols("       |                      SSSSSSSSSSS    | NN   nNNNNNn         AAA    AA     KKk   KKKk      eEE   EEe             ")
+                .addSymbols("       |                        SSSSSSSSSSS  | NN   NNn NNN        aAA     AA     KKk kKKKk       EEe eEEe              ")
+                .addSymbols("       |                         SSSSSSSSSSS | NN  NNn  nNNn      aAAa    aAA     KK kKKKk       eEE eEEe               ")
+                .addSymbols("       |                          SSSSSSSSSSS|nNN nNn    NNn      AAa     AAA     KKkKKKk        EEeeEEe                ")
+                .addSymbols("       |                          SSSSSSSSSSS|nNN NN     NNn     aAA     aAAA     KKKKKKk        EEEEE                  ")
+                .addSymbols("       |                         SSSSSSSSSSS |nNnnNn     NNN     AAa    aAAAA    kKKkkKKKk       EEEe     eE            ")
+                .addSymbols("       | SSSSSSSS               SSSSSSSSSSS  |nNnNN      NNN     AA    aAAaAA    KKk  kKKKk      EE       EE            ")
+                .addSymbols("       |    SSSSSSS          SSSSSSSSSSS     |NNnNn      nNNn    AA   aAAa AAa   KK    kKKKk     EEe    eEEe            ")
+                .addSymbols("       |       SSSSSSSSSSSSSSSSSSSSS         |NNNN       nNNNNN  AAa aAAa  AAA   KK     kKKKk    EEEe eEEEe             ")
+                .addSymbols("       |          SSSSSSSSSSSSSS             |NNNn        nNNNn  AAAAAAa   aAAA  KK      kKKKKK  eEEEEEEEe              ")
+                .addSymbols("       |             SSSSSSS                 |NNn                 AAAAa     AAa  KK       kKKKk   eEEEEe                ")
                 .addSymbols("                                                                                                                        ")
                 .addSymbols("                                                                                                                        ")
                 .addSymbols("                                                                                                                        ")

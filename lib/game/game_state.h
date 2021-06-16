@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "level.h"
+#include "../input/user_input.h"
 
 namespace lcg
 {
@@ -12,18 +13,28 @@ namespace lcg
         GameState();
         virtual ~GameState();
 
-        void init();
+        void init( UserInput& );
 
     protected:
         virtual void onInit(){}
 
+    private: // user input
+        UserInput* input = nullptr;
+
+    protected:
+        UserInput* getInput(){ return( input ); }
+
     private: // levels
         std::vector< Level* > levels;
+        Level* _activeLevel = nullptr;
 
     protected:
         void attach( Level* );
         Level* currentLevel();
         const Level* getCurrentLevel() const;
+
+    public:
+        void launch( const std::string& );
 
     public: // current scene
         virtual const SceneBuilder* getScene() = 0;

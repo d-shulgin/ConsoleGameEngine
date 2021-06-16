@@ -10,10 +10,9 @@ namespace lcg
     {
         counterFrames ++;
         elapsedTime += dt;
-        if( elapsedTime >= 1000.0f )
+        if( elapsedTime >= 1.0f )
         {
-            float time = elapsedTime / 1000.0f;
-            storeFrames( static_cast<float>(counterFrames)/time );
+            storeFrames( static_cast<float>(counterFrames)/elapsedTime );
             counterFrames = 0;
             elapsedTime = 0.0f;
         }
@@ -44,8 +43,7 @@ namespace lcg
         {
             if( !frames().empty() )
                 return( frames()[0] );
-            float time = elapsedTime / 1000.0f;
-            return( static_cast<float>(counterFrames)/time );
+            return( static_cast<float>(counterFrames)/elapsedTime );
         }
         return( 0.0f );
     }

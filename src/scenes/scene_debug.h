@@ -21,11 +21,17 @@ public: // name
 protected: // create & load scene
     virtual void onBuild() override;
 
-private: // text
-    lcg::Text* root = nullptr;
+private: // console
+    lcg::Text* console = nullptr;
 
 public:
-    void setText( const std::string& );
+    void setConsole( const std::string& );
+
+private: // fps meter
+    lcg::Text* fps = nullptr;
+
+public:
+    void setFPS( float );
 };
 
 #endif // SCENE_DEBUG_H

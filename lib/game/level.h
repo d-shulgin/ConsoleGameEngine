@@ -3,20 +3,24 @@
 
 #include <vector>
 #include <string>
-#include <functional>
 #include "scene_builder.h"
+//#include "../input/user_input.h"
 
 namespace lcg
 {
+    class UserInput;
+
     class Level
     {
     public:
         Level();
         virtual ~Level();
 
+        void init( lcg::UserInput* );
         void process( float );
 
     protected:
+        virtual void onInit( lcg::UserInput* ){}
         virtual void onProcess( float ){}
 
     public:
@@ -60,22 +64,6 @@ namespace lcg
     protected:
         std::vector< SceneBuilder* >& refScenes(){ return( _scenes ); }
         void beginScene();
-
-
-        /// @deprecated:
-#ifdef DEPRECATED
-        void update( float );
-
-    private: // scenes
-        std::vector< const lcg::Scene* > scenes;
-        int showScene = 0;
-
-    public:
-        void beginScene();
-        void nextScene();
-        const lcg::Scene* getScene() const;
-        Level& attachScene( const lcg::Scene* const );
-#endif // DEPRECATED
     };
 }
 

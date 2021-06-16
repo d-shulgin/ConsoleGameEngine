@@ -29,7 +29,11 @@ SOURCES += main.cpp \
     lib/input/vkey.cpp \
     lib/input/keyboard_shortcut.cpp \
     lib/input/user_input.cpp \
-    src/scenes/scene_debug.cpp
+    src/scenes/scene_debug.cpp \
+    src/levels/start_menu.cpp \
+    src/scenes/scene_menu.cpp \
+    src/actions/action_select_item_up.cpp \
+    src/actions/action_select_item_down.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -60,5 +64,9 @@ HEADERS += \
     lib/input/vkey.h \
     lib/input/keyboard_shortcut.h \
     lib/input/user_input.h \
-    src/scenes/scene_debug.h
+    src/scenes/scene_debug.h \
+    src/levels/start_menu.h \
+    src/scenes/scene_menu.h \
+    src/actions/action_select_item_up.h \
+    src/actions/action_select_item_down.h
 

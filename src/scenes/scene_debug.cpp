@@ -1,4 +1,6 @@
 #include "scene_debug.h"
+#include <sstream>
+#include <iomanip>
 
 SceneDebug::SceneDebug()
 {
@@ -9,19 +11,41 @@ SceneDebug::~SceneDebug()
 
 void SceneDebug::onBuild()
 {
-    _scene.setRoot( root = new lcg::Text("root") );
+    lcg::Group* root = nullptr;
+    _scene.setRoot( root = new lcg::Group("root") );
     if( nullptr != root )
     {
-        root->setPosition( 1, 1 );
-        root->setColor( lcg::ColorID::white );
+        root -> setPosition( 0, 0 );
+        root -> addChild( console = new lcg::Text("console") );
+        root -> addChild( fps = new lcg::Text("FPS") );
+        if( nullptr != console )
+        {
+            console->setPosition( 1, 1 );
+            console->setColor( lcg::ColorID::white );
+        }
+        if( nullptr != fps )
+        {
+            fps->setPosition( 110, 1 );
+            fps->setColor( lcg::ColorID::white );
+        }
     }
     return;
 }
-void SceneDebug::setText( const std::string& str )
+void SceneDebug::setConsole( const std::string& str )
 {
-    if( nullptr != root )
+    if( nullptr != console )
     {
-        root->setString( str );
+        console->setString( str );
+    }
+    return;
+}
+void SceneDebug::setFPS( float fpsVal )
+{
+    if( nullptr != fps )
+    {
+        std::stringstream ss;
+        ss << std::setprecision(3) << fpsVal;
+        fps->setString( "FPS: "+ss.str() );
     }
     return;
 }

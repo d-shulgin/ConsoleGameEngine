@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 
+#include <process.h>
 #include <windows.h>
 #include <windowsx.h>
 
@@ -10,7 +11,13 @@ float dt_from( DWORD& );
 
 int main()
 {
-    //setlocale( LC_ALL, "Russian" );
+    system( "chcp 65001" );
+    setlocale( LC_ALL, "Russian" );
+
+//    SetConsoleCP(65001);
+//    SetConsoleOutputCP(65001);
+//    LCID locale = GetSystemDefaultLCID();
+//    SetLocaleInfoA(locale, LOCALE_SLOCALIZEDCOUNTRYNAME, "ru-Ru" );
 
     Game game( 120, 50 );
     game.init( lcg::SurfaceInitFlag::withDoubleBuffer );

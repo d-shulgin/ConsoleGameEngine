@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <functional>
+
 #include "../lib/engine.h"
 #include "snake_state.h"
 #include "scenes/package.h"
@@ -36,48 +38,25 @@ private: // state
 
 private: // scenes
     SceneStart _scene_startApp;
+    SceneMenu  _scene_Menu;
     SceneDebug _scene_Debug;
 
 private: // actions
     Action_StartMenu action_StartMenu;
-
     class Handler_StartMenu final : public lcg::Action::Callback
     {
-        SceneDebug* debug = nullptr;
+        std::function<void (Game&)> fnPress;
+        Game* obj = nullptr;
     public:
         Handler_StartMenu()
             : lcg::Action::Callback()
         {}
-
         virtual void onPress() override;
         virtual void onRelease() override;
-
-        void setDebug( SceneDebug* scene ){ debug = scene; }
+        void setFnPress( Game*, std::function<void(Game&)> );
     } handlerStartMenu;
 
-
-
-
-    /// @deprecated: test
-#ifdef DEPRECATED
-private: // scene app started
-    lcg::Scene sceneStartApp;
-    lcg::Image logo;
-    lcg::Sprite* test = nullptr;
-    lcg::Animation testAnim;
-    lcg::Text* conOut = nullptr;
-    lcg::Sprite* invitation = nullptr;
-    lcg::Animation invitationAnim;
-    float timeInvitation = 0.0f;
-    void initStartApp();
-private: // scene menu
-    lcg::Scene sceneMenu;
-    lcg::Text* mainMenu[3] = {nullptr};
-    lcg::Image menuBackground;
-    void initMainMenu();
-protected:
-#endif // DEPRECATED
-
+    void launchStartMenu();
 };
 
 #endif // GAME_H

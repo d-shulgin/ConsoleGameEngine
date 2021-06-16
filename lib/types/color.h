@@ -8,6 +8,7 @@ namespace lcg
     enum class ColorID
     {
         black = 0
+        , dark_gray    = FOREGROUND_INTENSITY
         , gray         = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE
         , white        = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
         , red          = FOREGROUND_RED

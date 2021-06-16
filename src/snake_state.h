@@ -24,6 +24,12 @@ private: // Level: start application
 public:
     StartApp& level_StartApp(){ return( _level_StartApp ); }
 
+private: // Level: start menu
+    StartMenu _level_StartMenu;
+
+public:
+    StartMenu& level_StartMenu(){ return( _level_StartMenu ); }
+
 public: // current scene
     virtual const lcg::SceneBuilder* getScene() override;
 

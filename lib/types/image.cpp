@@ -51,6 +51,7 @@ namespace lcg
                     switch( static_cast<ImageLegend>(clr) )
                     {
                     case ImageLegend::black:        color = static_cast<WORD>(ColorID::black);        break;
+                    case ImageLegend::dark_gray:    color = static_cast<WORD>(ColorID::dark_gray);    break;
                     case ImageLegend::gray:         color = static_cast<WORD>(ColorID::gray);         break;
                     case ImageLegend::white:        color = static_cast<WORD>(ColorID::white);        break;
                     case ImageLegend::red:          color = static_cast<WORD>(ColorID::red);          break;
@@ -88,6 +89,7 @@ namespace lcg
                     switch( static_cast<ImageLegend>(clr) )
                     {
                     case ImageLegend::black:        color = static_cast<WORD>(ColorID::black);        break;
+                    case ImageLegend::dark_gray:    color = static_cast<WORD>(ColorID::dark_gray);    break;
                     case ImageLegend::gray:         color = static_cast<WORD>(ColorID::gray);         break;
                     case ImageLegend::white:        color = static_cast<WORD>(ColorID::white);        break;
                     case ImageLegend::red:          color = static_cast<WORD>(ColorID::red);          break;

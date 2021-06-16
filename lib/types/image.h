@@ -10,6 +10,7 @@ namespace lcg
     enum class ImageLegend
     {
         black = ' '
+        , dark_gray = 'a'
         , gray = 'w'
         , white = 'W'
         , red = 'r'

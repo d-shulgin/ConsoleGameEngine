@@ -1,10 +1,15 @@
 #include "level.h"
 #include <algorithm>
+#include "../input/user_input.h"
 
 namespace lcg
 {
     Level::Level()
     {
+    }
+    void Level::init( lcg::UserInput* ui )
+    {
+        onInit( ui );
     }
     void Level::process( float dt )
     {
@@ -92,35 +97,4 @@ namespace lcg
     Level::~Level()
     {
     }
-
-
-
-
-
-
-
-#ifdef DEPRECATED
-    void Level::update( float dt )
-    {
-    }
-    void Level::beginScene()
-    {
-        showScene = 0;
-    }
-    void Level::nextScene()
-    {
-        showScene ++;
-    }
-    const lcg::Scene* Level::getScene() const
-    {
-        if( showScene < static_cast<int>(scenes.size()) )
-            return( scenes[ showScene ] );
-        return( nullptr );
-    }
-    Level& Level::attachScene( const lcg::Scene* const scene )
-    {
-        scenes.push_back( scene );
-        return( *this );
-    }
-#endif // DEPRECATED
 }
