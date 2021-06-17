@@ -35,6 +35,11 @@ namespace lcg
         onStart();
         return;
     }
+    void Core::stop()
+    {
+        isStarted = false;
+        return;
+    }
     void Core::process( float dt )
     {
         onProcess( dt );

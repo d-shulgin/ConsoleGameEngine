@@ -24,7 +24,7 @@ namespace lcg
         }
         return( *this );
     }
-    bool KeyboardShortcut::pressed() const
+    bool KeyboardShortcut::getPressed() const
     {
         if( getKeys().empty() )
             return( false );
@@ -33,9 +33,9 @@ namespace lcg
             result = result && _keys[i].pressed();
         return( result );
     }
-    bool KeyboardShortcut::released() const
+    bool KeyboardShortcut::getReleased() const
     {
-        return( !pressed() );
+        return( !getPressed() );
     }
     KeyboardShortcut::~KeyboardShortcut()
     {

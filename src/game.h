@@ -7,6 +7,7 @@
 #include "snake_state.h"
 #include "scenes/package.h"
 #include "actions/action_start_menu.h"
+#include "actions/action_choice_item.h"
 
 class Game final : public lcg::Core
 {
@@ -51,12 +52,44 @@ private: // actions
         Handler_StartMenu()
             : lcg::Action::Callback()
         {}
-        virtual void onPress() override;
-        virtual void onRelease() override;
-        void setFnPress( Game*, std::function<void(Game&)> );
+        virtual void onPress() override
+        {
+            if( nullptr != obj )
+                fnPress( *obj );
+        }
+        virtual void onRelease() override{ }
+        void setFnPress( Game* o, std::function<void(Game&)> fn )
+        {
+            obj = o;
+            fnPress = fn;
+        }
     } handlerStartMenu;
 
     void launchStartMenu();
+
+    Action_ChoiceItem action_ChoiceItem;
+    class Handler_ChoiceItem final : public lcg::Action::Callback
+    {
+        std::function<void (Game&)> fnPress;
+        Game* obj = nullptr;
+    public:
+        Handler_ChoiceItem()
+            : lcg::Action::Callback()
+        {}
+        virtual void onPress() override
+        {
+            if( nullptr != obj )
+                fnPress( *obj );
+        }
+        virtual void onRelease() override{ }
+        void setFnPress( Game* o, std::function<void(Game&)> fn )
+        {
+            obj = o;
+            fnPress = fn;
+        }
+    } handlerChoiceItem;
+
+    void choiceStartMenu();
 };
 
 #endif // GAME_H

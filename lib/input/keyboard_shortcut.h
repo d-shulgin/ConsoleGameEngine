@@ -19,8 +19,8 @@ namespace lcg
     public:
         KeyboardShortcut& attach( const VKey& );
         const std::vector< VKey >& getKeys() const { return( _keys ); }
-        bool pressed() const;
-        bool released() const;
+        bool getPressed() const;
+        bool getReleased() const;
     };
 }
 

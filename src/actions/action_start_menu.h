@@ -12,6 +12,10 @@ public:
 public: // name
     static std::string class_name() { return( "Action_StartMenu" ); }
     virtual std::string getName() const override { return( class_name() ); }
+    virtual std::string getDescription() const override
+    {
+        return( "Show main menu" );
+    }
 };
 
 #endif // ACTION_START_MENU_H

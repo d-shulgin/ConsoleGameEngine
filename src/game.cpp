@@ -4,7 +4,8 @@
 Game::Game( int width, int height )
     : Core( width, height )
 {
-    handlerStartMenu.setFnPress( this, &Game::launchStartMenu );
+    handlerStartMenu .setFnPress( this, &Game::launchStartMenu );
+    handlerChoiceItem.setFnPress( this, &Game::choiceStartMenu );
 }
 void Game::onInit()
 {
@@ -19,6 +20,13 @@ void Game::onInit()
     action_StartMenu.setCallback( &handlerStartMenu );
     action_StartMenu.setActive( true );
     refInput().attach( &action_StartMenu );
+
+    action_ChoiceItem.bind( &state.level_StartMenu() );
+    action_ChoiceItem.setKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(VK_RETURN)}) );
+    action_ChoiceItem.setCallback( &handlerChoiceItem );
+    action_ChoiceItem.setActive( true );
+    refInput().attach( &action_ChoiceItem );
+    return;
 }
 void Game::onStart()
 {
@@ -61,21 +69,15 @@ void Game::launchStartMenu()
     state.launch( StartMenu::class_name() );
     return;
 }
-
-
-void Game::Handler_StartMenu::onPress()
+void Game::choiceStartMenu()
 {
-    if( nullptr != obj )
-        fnPress( *obj );
-    return;
-}
-void Game::Handler_StartMenu::onRelease()
-{
-    return;
-}
-void Game::Handler_StartMenu::setFnPress( Game* o, std::function<void (Game&)> fn )
-{
-    obj = o;
-    fnPress = fn;
+    switch( state.level_StartMenu().getCurrentMenuItem() )
+    {
+    case 0:break;
+    case 1:break;
+    case 2:
+        stop();
+        break;
+    }
     return;
 }

@@ -49,6 +49,7 @@ namespace lcg
     public:
         bool inProcess() const { return( isStarted ); }
         void start();
+        void stop();
         void process( float );
         void postProcess();
 

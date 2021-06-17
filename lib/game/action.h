@@ -34,6 +34,7 @@ namespace lcg
 
     public:
         virtual std::string getName() const = 0;
+        virtual std::string getDescription() const { return(""); }
 
     private: // active
         bool active = false;
@@ -48,6 +49,17 @@ namespace lcg
     public:
         const KeyboardShortcut& getKeyboardShortcut() const { return( kbShortcut ); }
         void setKeyboardShortcut( const KeyboardShortcut& v ){ kbShortcut = v; }
+
+    private: // alternate keyboard shortcut
+        KeyboardShortcut akbShortcut;
+
+    public:
+        const KeyboardShortcut& getAltKeyboardShortcut() const { return( akbShortcut ); }
+        void setAltKeyboardShortcut( const KeyboardShortcut& v ){ akbShortcut = v; }
+
+    public: // check state
+        bool getPressed() const;
+        bool getReleased() const;
 
     private: // level
         const Level* level = nullptr;

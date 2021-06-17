@@ -73,11 +73,13 @@ private: // actions
     } handlerSelectItemDown;
 
 private: // cursor
-    const int AMOUNT_MENUITEMS = 3;
     int currentMenuItem = 0;
 
     void selectMenuItemUp();
     void selectMenuItemDown();
+
+public:
+    int getCurrentMenuItem() const { return( currentMenuItem ); }
 };
 
 #endif // START_MENU_H

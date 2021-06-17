@@ -1,4 +1,5 @@
 #include "scene_menu.h"
+#include <sstream>
 
 SceneMenu::SceneMenu()
 {
@@ -7,6 +8,11 @@ SceneMenu::~SceneMenu()
 {
 }
 
+void SceneMenu::onInit()
+{
+    initTips();
+    return;
+}
 void SceneMenu::onBuild()
 {
     rsc.load();
@@ -19,8 +25,17 @@ void SceneMenu::onBuild()
         root -> setPosition( 30, 10 );
         root -> addChild( background = new lcg::Sprite("logotype") );
         root -> addChild( cursor = new lcg::Sprite("cursor") );
+        root -> addChild( tip = new lcg::Text("tip") );
+        for( int i = 0; i < AMOUNT_MENUITEMS; i++ )
+        {
+            std::stringstream ss;
+            ss << i+1;
+            root -> addChild( items[i] = new lcg::Sprite("item_"+ss.str()) );
+        }
         loadBackground();
         loadCursor();
+        loadItems();
+        loadTips();
     }
     return;
 }
@@ -72,11 +87,74 @@ void SceneMenu::selectMenuItem( int item )
     }
     return;
 }
+void SceneMenu::loadItems()
+{
+    items[0]->setImage( rsc.itemStart() );
+    items[0]->setPosition( 2, 4+0*6);
+    items[1]->setImage( rsc.itemConfig() );
+    items[1]->setPosition( 2, 4+1*6);
+    items[2]->setImage( rsc.itemExit() );
+    items[2]->setPosition( 2, 4+2*6);
+    return;
+}
+void SceneMenu::initTips()
+{
+    //                     123456789012345678901234567890123456789012345678
+    tipStrings.push_back( "You can select a menu item by moving the cursor \n\n"
+                          "with the arrows (up / down) or buttons W and S, \n\n"
+                          "confirm the selection by pressing Enter." );
+    tipStrings.push_back( "The START menu item starts the game." );
+    tipStrings.push_back( "The CONFIG menu item shows the configuration of \n\n"
+                          "the game actions." );
+    tipStrings.push_back( "The EXIT menu item allows you to exit the game." );
+    timeShowTip = TIME_SHOWTIP;
+    timeHideTip = 0.0f;
+}
+void SceneMenu::loadTips()
+{
+    if( nullptr != tip )
+    {
+        tip -> setPosition( 10, 23 );
+        tip -> setColor( lcg::ColorID::light_yellow );
+        tip -> setBackgroundColor( lcg::ColorID::black  );
+        tip -> setString( getTip() );
+        tip -> setVisible( timeShowTip > 0.0f );
+    }
+    return;
+}
+void SceneMenu::processTips( float dt )
+{
+    if( nullptr != tip && !tipStrings.empty() )
+    {
+        if( timeShowTip > 0.0f )
+        {
+            timeShowTip -= dt;
+            if( timeShowTip <= 0.0f )
+            {
+                timeHideTip = TIME_HIDETIP;
+                tip -> setVisible( false );
+                ++tipSelected %= tipStrings.size();
+            }
+        }
+        if( timeHideTip > 0.0f )
+        {
+            timeHideTip -= dt;
+            if( timeHideTip <= 0.0f )
+            {
+                timeShowTip = TIME_SHOWTIP;
+                tip -> setString( getTip() );
+                tip -> setVisible( true );
+            }
+        }
+    }
+    return;
+}
 void SceneMenu::onProcess( float dt )
 {
     cursorAnim.update( dt );
     if( nullptr != cursor )
         cursor->setImage( cursorAnim.getImage() );
+    processTips( dt );
     return;
 }
 
@@ -191,13 +269,13 @@ void SceneMenu::Resources::load()
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
-                .addBgColors("ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("S                                                        s")
-                .addBgColors("S                                                        s")
-                .addBgColors("s                                                        S")
-                .addBgColors("s  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  S");
+                .addBgColors("ssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSS")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("Sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("Sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("sbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbS");
         _cursor[1] = lcg::Image( 58, 7 );
         _cursor[1].beginSymbols().beginBgColors() // #001
                 .addSymbols ("                                                          ")
@@ -207,13 +285,13 @@ void SceneMenu::Resources::load()
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
-                .addBgColors(" ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssS")
-                .addBgColors("                                                         S")
-                .addBgColors("S                                                         ")
-                .addBgColors("S                                                         ")
-                .addBgColors("s                                                        s")
-                .addBgColors("s                                                        s")
-                .addBgColors("  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SS");
+                .addBgColors("bssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssS")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("Sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("Sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("bbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSS");
         _cursor[2] = lcg::Image( 58, 7 );
         _cursor[2].beginSymbols().beginBgColors() // #002
                 .addSymbols ("                                                          ")
@@ -223,13 +301,13 @@ void SceneMenu::Resources::load()
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
-                .addBgColors("  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ss")
-                .addBgColors("S                                                        S")
-                .addBgColors("S                                                        S")
-                .addBgColors("s                                                         ")
-                .addBgColors("s                                                         ")
-                .addBgColors("                                                         s")
-                .addBgColors(" SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSs");
+                .addBgColors("bbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbss")
+                .addBgColors("SbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("SbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("bSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSs");
         _cursor[3] = lcg::Image( 58, 7 );
         _cursor[3].beginSymbols().beginBgColors() // #003
                 .addSymbols ("                                                          ")
@@ -239,13 +317,13 @@ void SceneMenu::Resources::load()
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
-                .addBgColors("S  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  s")
-                .addBgColors("S                                                        s")
-                .addBgColors("s                                                        S")
-                .addBgColors("s                                                        S")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss");
+                .addBgColors("SbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbs")
+                .addBgColors("Sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("SSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSss");
         _cursor[4] = lcg::Image( 58, 7 );
         _cursor[4].beginSymbols().beginBgColors() // #004
                 .addSymbols ("                                                          ")
@@ -255,13 +333,13 @@ void SceneMenu::Resources::load()
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
-                .addBgColors("SS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ")
-                .addBgColors("s                                                        s")
-                .addBgColors("s                                                        s")
-                .addBgColors("                                                         S")
-                .addBgColors("                                                         S")
-                .addBgColors("S                                                         ")
-                .addBgColors("Sss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss ");
+                .addBgColors("SSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbb")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("Sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("SssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssb");
         _cursor[5] = lcg::Image( 58, 7 );
         _cursor[5].beginSymbols().beginBgColors() // #005
                 .addSymbols ("                                                          ")
@@ -271,498 +349,93 @@ void SceneMenu::Resources::load()
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
                 .addSymbols ("                                                          ")
-                .addBgColors("sSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS  ssSS ")
-                .addBgColors("s                                                         ")
-                .addBgColors("                                                         s")
-                .addBgColors("                                                         s")
-                .addBgColors("S                                                        S")
-                .addBgColors("S                                                        S")
-                .addBgColors("ss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  SSss  ");
-//        _cursor[6] = lcg::Image( 58, 7 );
-//        _cursor[6].beginSymbols().beginBgColors() // #006
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("  S     S     S     S     S     S     S     S     S     S ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                         S")
-//                .addBgColors("    S     S     S     S     S     S     S     S     S     ");
-//        _cursor[7] = lcg::Image( 58, 7 );
-//        _cursor[7].beginSymbols().beginBgColors() // #007
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("  Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("s                                                         ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                         S")
-//                .addBgColors("   sS    sS    sS    sS    sS    sS    sS    sS    sS    s");
-//        _cursor[8] = lcg::Image( 58, 7 );
-//        _cursor[8].beginSymbols().beginBgColors() // #008
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("  sS    sS    sS    sS    sS    sS    sS    sS    sS    sS")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("s                                                         ")
-//                .addBgColors("                                                         s")
-//                .addBgColors("   Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    S");
-//        _cursor[9] = lcg::Image( 58, 7 );
-//        _cursor[9].beginSymbols().beginBgColors() // #009
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("   S     S     S     S     S     S     S     S     S     S")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("   S     S     S     S     S     S     S     S     S     S");
-//        _cursor[10] = lcg::Image( 58, 7 );
-//        _cursor[10].beginSymbols().beginBgColors() // #010
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("   Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    S")
-//                .addBgColors("                                                         s")
-//                .addBgColors("s                                                         ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("  sS    sS    sS    sS    sS    sS    sS    sS    sS    sS");
-//        _cursor[11] = lcg::Image( 58, 7 );
-//        _cursor[11].beginSymbols().beginBgColors() // #011
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("   sS    sS    sS    sS    sS    sS    sS    sS    sS    s")
-//                .addBgColors("                                                         S")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("s                                                         ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("  Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss");
-//        _cursor[12] = lcg::Image( 58, 7 );
-//        _cursor[12].beginSymbols().beginBgColors() // #012
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("    S     S     S     S     S     S     S     S     S     ")
-//                .addBgColors("                                                         S")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("  S     S     S     S     S     S     S     S     S     S ");
-//        _cursor[13] = lcg::Image( 58, 7 );
-//        _cursor[13].beginSymbols().beginBgColors() // #013
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    ")
-//                .addBgColors("s                                                        S")
-//                .addBgColors("S                                                        s")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors(" sS    sS    sS    sS    sS    sS    sS    sS    sS    sS ");
-//        _cursor[14] = lcg::Image( 58, 7 );
-//        _cursor[14].beginSymbols().beginBgColors() // #014
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("    sS    sS    sS    sS    sS    sS    sS    sS    sS    ")
-//                .addBgColors("S                                                        s")
-//                .addBgColors("s                                                        S")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors(" Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss ");
-//        _cursor[15] = lcg::Image( 58, 7 );
-//        _cursor[15].beginSymbols().beginBgColors() // #015
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("     S     S     S     S     S     S     S     S     S    ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                         S")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors(" S     S     S     S     S     S     S     S     S     S  ");
-//        _cursor[16] = lcg::Image( 58, 7 );
-//        _cursor[16].beginSymbols().beginBgColors() // #016
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("s    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss   ")
-//                .addBgColors("S                                                         ")
-//                .addBgColors("                                                         S")
-//                .addBgColors("                                                         s")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("sS    sS    sS    sS    sS    sS    sS    sS    sS    sS  ");
-//        _cursor[17] = lcg::Image( 58, 7 );
-//        _cursor[17].beginSymbols().beginBgColors() // #017
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addSymbols ("                                                          ")
-//                .addBgColors("S    sS    sS    sS    sS    sS    sS    sS    sS    sS   ")
-//                .addBgColors("s                                                         ")
-//                .addBgColors("                                                         s")
-//                .addBgColors("                                                         S")
-//                .addBgColors("                                                          ")
-//                .addBgColors("                                                          ")
-//                .addBgColors("Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss  ");
+                .addBgColors("sSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSbbssSSb")
+                .addBgColors("sbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbs")
+                .addBgColors("SbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("SbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbS")
+                .addBgColors("ssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbbSSssbb");
     }
-#ifdef DEPRECATE
-    // cursor     |
+    // itemStart  |
     {
-        _cursor[0] = lcg::Image( 58, 7 );
-        _cursor[0].beginSymbols().beginBgColors() // #000
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("S     S     S     S     S     S     S     S     S     S   ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                         S")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("S     S     S     S     S     S     S     S     S     S   ");
-        _cursor[1] = lcg::Image( 58, 7 );
-        _cursor[1].beginSymbols().beginBgColors() // #001
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss  ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                         S")
-                .addBgColors("                                                         s")
-                .addBgColors("s                                                         ")
-                .addBgColors("S    sS    sS    sS    sS    sS    sS    sS    sS    sS   ");
-        _cursor[2] = lcg::Image( 58, 7 );
-        _cursor[2].beginSymbols().beginBgColors() // #002
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("sS    sS    sS    sS    sS    sS    sS    sS    sS    sS  ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                         s")
-                .addBgColors("                                                         S")
-                .addBgColors("S                                                         ")
-                .addBgColors("s    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss   ");
-        _cursor[3] = lcg::Image( 58, 7 );
-        _cursor[3].beginSymbols().beginBgColors() // #003
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors(" S     S     S     S     S     S     S     S     S     S  ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                         S")
-                .addBgColors("S                                                         ")
-                .addBgColors("     S     S     S     S     S     S     S     S     S    ");
-        _cursor[4] = lcg::Image( 58, 7 );
-        _cursor[4].beginSymbols().beginBgColors() // #004
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors(" Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("s                                                        S")
-                .addBgColors("S                                                        s")
-                .addBgColors("    sS    sS    sS    sS    sS    sS    sS    sS    sS    ");
-        _cursor[5] = lcg::Image( 58, 7 );
-        _cursor[5].beginSymbols().beginBgColors() // #005
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors(" sS    sS    sS    sS    sS    sS    sS    sS    sS    sS ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("S                                                        s")
-                .addBgColors("s                                                        S")
-                .addBgColors("    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    ");
-        _cursor[6] = lcg::Image( 58, 7 );
-        _cursor[6].beginSymbols().beginBgColors() // #006
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("  S     S     S     S     S     S     S     S     S     S ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                         S")
-                .addBgColors("    S     S     S     S     S     S     S     S     S     ");
-        _cursor[7] = lcg::Image( 58, 7 );
-        _cursor[7].beginSymbols().beginBgColors() // #007
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("  Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("s                                                         ")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                         S")
-                .addBgColors("   sS    sS    sS    sS    sS    sS    sS    sS    sS    s");
-        _cursor[8] = lcg::Image( 58, 7 );
-        _cursor[8].beginSymbols().beginBgColors() // #008
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("  sS    sS    sS    sS    sS    sS    sS    sS    sS    sS")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("S                                                         ")
-                .addBgColors("s                                                         ")
-                .addBgColors("                                                         s")
-                .addBgColors("   Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    S");
-        _cursor[9] = lcg::Image( 58, 7 );
-        _cursor[9].beginSymbols().beginBgColors() // #009
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("   S     S     S     S     S     S     S     S     S     S")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("   S     S     S     S     S     S     S     S     S     S");
-        _cursor[10] = lcg::Image( 58, 7 );
-        _cursor[10].beginSymbols().beginBgColors() // #010
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("   Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    S")
-                .addBgColors("                                                         s")
-                .addBgColors("s                                                         ")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("  sS    sS    sS    sS    sS    sS    sS    sS    sS    sS");
-        _cursor[11] = lcg::Image( 58, 7 );
-        _cursor[11].beginSymbols().beginBgColors() // #011
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("   sS    sS    sS    sS    sS    sS    sS    sS    sS    s")
-                .addBgColors("                                                         S")
-                .addBgColors("S                                                         ")
-                .addBgColors("s                                                         ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("  Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss");
-        _cursor[12] = lcg::Image( 58, 7 );
-        _cursor[12].beginSymbols().beginBgColors() // #012
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("    S     S     S     S     S     S     S     S     S     ")
-                .addBgColors("                                                         S")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("  S     S     S     S     S     S     S     S     S     S ");
-        _cursor[13] = lcg::Image( 58, 7 );
-        _cursor[13].beginSymbols().beginBgColors() // #013
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    ")
-                .addBgColors("s                                                        S")
-                .addBgColors("S                                                        s")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors(" sS    sS    sS    sS    sS    sS    sS    sS    sS    sS ");
-        _cursor[14] = lcg::Image( 58, 7 );
-        _cursor[14].beginSymbols().beginBgColors() // #014
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("    sS    sS    sS    sS    sS    sS    sS    sS    sS    ")
-                .addBgColors("S                                                        s")
-                .addBgColors("s                                                        S")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors(" Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss ");
-        _cursor[15] = lcg::Image( 58, 7 );
-        _cursor[15].beginSymbols().beginBgColors() // #015
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("     S     S     S     S     S     S     S     S     S    ")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                         S")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors(" S     S     S     S     S     S     S     S     S     S  ");
-        _cursor[16] = lcg::Image( 58, 7 );
-        _cursor[16].beginSymbols().beginBgColors() // #016
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("s    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss   ")
-                .addBgColors("S                                                         ")
-                .addBgColors("                                                         S")
-                .addBgColors("                                                         s")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("sS    sS    sS    sS    sS    sS    sS    sS    sS    sS  ");
-        _cursor[17] = lcg::Image( 58, 7 );
-        _cursor[17].beginSymbols().beginBgColors() // #017
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addSymbols ("                                                          ")
-                .addBgColors("S    sS    sS    sS    sS    sS    sS    sS    sS    sS   ")
-                .addBgColors("s                                                         ")
-                .addBgColors("                                                         s")
-                .addBgColors("                                                         S")
-                .addBgColors("                                                          ")
-                .addBgColors("                                                          ")
-                .addBgColors("Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss    Ss  ");
+        _itemStart = lcg::Image( 56, 5 );
+        _itemStart.beginSymbols().beginColors().beginBgColors()
+                .addSymbols ( "            @@@@@ @@@@@@     @@ @@@@   @@@@@@           " )
+                .addSymbols ( "           @        @@      @ @ @@  @    @@             " )
+                .addSymbols ( "            @@@@    @@     @@@@ @@@@     @@             " )
+                .addSymbols ( "                @   @@    @   @ @@  @    @@             " )
+                .addSymbols ( "           @@@@@    @@   @    @ @@   @   @@             " )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" );
     }
-#endif // DEPRECATE
+    // itemResume |
+    {
+        _itemResume = lcg::Image( 56, 5 );
+        _itemResume.beginSymbols().beginColors().beginBgColors()
+                .addSymbols ( "      @@@@   @@@@@@  @@@@@ @@   @ @@     @@ @@@@@@      " )
+                .addSymbols ( "      @@  @  @@     @      @@   @ @@@   @@@ @@          " )
+                .addSymbols ( "      @@@@   @@@@    @@@@  @@   @ @@ @ @ @@ @@@@        " )
+                .addSymbols ( "      @@  @  @@          @  @  @  @@  @  @@ @@          " )
+                .addSymbols ( "      @@   @ @@@@@@ @@@@@    @@   @@     @@ @@@@@@      " )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" );
+    }
+    // itemConfig |
+    {
+        _itemConfig = lcg::Image( 56, 5 );
+        _itemConfig.beginSymbols().beginColors().beginBgColors()
+                .addSymbols ( "         @@@@   @@@@  @@   @ @@@@@@ @@@@  @@@@          " )
+                .addSymbols ( "        @@   @ @@  @@ @@@  @ @@      @@  @@   @         " )
+                .addSymbols ( "        @@     @@  @@ @@ @ @ @@@@    @@  @@             " )
+                .addSymbols ( "        @@   @ @@  @@ @@  @@ @@      @@  @@  @@         " )
+                .addSymbols ( "         @@@@   @@@@  @@   @ @@     @@@@  @@@@@         " )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" );
+    }
+    // itemExit   |
+    {
+        _itemExit = lcg::Image( 56, 5 );
+        _itemExit.beginSymbols().beginColors().beginBgColors()
+                .addSymbols ( "               @@@@@@ @@  @@ @@@@ @@@@@@                " )
+                .addSymbols ( "               @@      @  @   @@    @@                  " )
+                .addSymbols ( "               @@@@     @@    @@    @@                  " )
+                .addSymbols ( "               @@      @  @   @@    @@                  " )
+                .addSymbols ( "               @@@@@@ @@  @@ @@@@   @@                  " )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" )
+                .addBgColors( "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" );
+    }
     return;
 }

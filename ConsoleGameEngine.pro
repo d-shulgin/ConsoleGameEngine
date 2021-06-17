@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     src/levels/start_menu.cpp \
     src/scenes/scene_menu.cpp \
     src/actions/action_select_item_up.cpp \
-    src/actions/action_select_item_down.cpp
+    src/actions/action_select_item_down.cpp \
+    src/actions/action_choice_item.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -68,5 +69,6 @@ HEADERS += \
     src/levels/start_menu.h \
     src/scenes/scene_menu.h \
     src/actions/action_select_item_up.h \
-    src/actions/action_select_item_down.h
+    src/actions/action_select_item_down.h \
+    src/actions/action_choice_item.h
 

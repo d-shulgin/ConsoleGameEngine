@@ -10,11 +10,12 @@ namespace lcg
     {
         for( Action* action: _actions )
         {
-            if( action->getActive() && action->getKeyboardShortcut().pressed() && !action->getProcessed() )
+            if( action->getActive() && action->getPressed() && !action->getProcessed() )
                 action->process();
-            else if( action->getActive() && action->getKeyboardShortcut().released() && action->getProcessed() )
+            else if( action->getActive() && action->getReleased() && action->getProcessed() )
                 action->process();
         }
+        return;
     }
     UserInput&UserInput::attach( Action* action )
     {

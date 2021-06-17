@@ -19,16 +19,21 @@ int main()
 //    LCID locale = GetSystemDefaultLCID();
 //    SetLocaleInfoA(locale, LOCALE_SLOCALIZEDCOUNTRYNAME, "ru-Ru" );
 
-    Game game( 120, 50 );
-    game.init( lcg::SurfaceInitFlag::withDoubleBuffer );
-    game.start();
-    DWORD ticks = GetTickCount(); // milliseconds
-    while( game.inProcess() ) // main game loop
+    // launch Game
     {
-        game.process( dt_from(ticks) );
-        game.draw();
-        game.postProcess();
+        Game game( 120, 50 );
+        game.init( lcg::SurfaceInitFlag::withDoubleBuffer );
+        game.start();
+        DWORD ticks = GetTickCount(); // milliseconds
+        while( game.inProcess() ) // main game loop
+        {
+            game.process( dt_from(ticks) );
+            game.draw();
+            game.postProcess();
+        }
     }
+    std::cout << "Game completed..." << std::endl;
+
     return 0;
 }
 

@@ -12,11 +12,13 @@ void StartMenu::onInit( lcg::UserInput* input )
 {
     action_SelectMenuItemUp.bind( this );
     action_SelectMenuItemUp.setKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(0x57 /*W key*/)}) );
+    action_SelectMenuItemUp.setAltKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(VK_UP)}) );
     action_SelectMenuItemUp.setCallback( &handlerSelectItemUp );
     action_SelectMenuItemUp.setActive( true );
 
     action_SelectMenuItemDown.bind( this );
     action_SelectMenuItemDown.setKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(0x53 /*S key*/)}) );
+    action_SelectMenuItemDown.setAltKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(VK_DOWN)}) );
     action_SelectMenuItemDown.setCallback( &handlerSelectItemDown );
     action_SelectMenuItemDown.setActive( true );
 
@@ -57,8 +59,8 @@ void StartMenu::selectMenuItemUp()
 void StartMenu::selectMenuItemDown()
 {
     currentMenuItem ++;
-    if( currentMenuItem >= AMOUNT_MENUITEMS )
-        currentMenuItem = AMOUNT_MENUITEMS - 1;
+    if( currentMenuItem >= SceneMenu::AMOUNT_MENUITEMS )
+        currentMenuItem = SceneMenu::AMOUNT_MENUITEMS - 1;
 
     auto it = std::find_if( refScenes().begin()
                             , refScenes().end()

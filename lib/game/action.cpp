@@ -11,13 +11,21 @@ namespace lcg
             return( getLevel()->getActive() && active );
         return( active );
     }
+    bool Action::getPressed() const
+    {
+        return( getKeyboardShortcut().getPressed() || getAltKeyboardShortcut().getPressed() );
+    }
+    bool Action::getReleased() const
+    {
+        return( getKeyboardShortcut().getReleased() && getAltKeyboardShortcut().getReleased() );
+    }
     void Action::bind( const lcg::Level* level )
     {
         this -> level = level;
     }
     void Action::process()
     {
-        processed = getKeyboardShortcut().pressed();
+        processed = getPressed();
         if( !onProcess() )
         {
             if( nullptr != handler )
