@@ -3,6 +3,7 @@
 #include <iomanip>
 
 SceneDebug::SceneDebug()
+    : lcg::SceneBuilder()
 {
 }
 SceneDebug::~SceneDebug()

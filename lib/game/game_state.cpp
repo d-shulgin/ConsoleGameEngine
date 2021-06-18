@@ -40,6 +40,10 @@ namespace lcg
         /// @todo: throw
         return( nullptr );
     }
+    Level* GameState::deactiveLevel()
+    {
+        return( _deactiveLevel );
+    }
     const Level* GameState::getCurrentLevel() const
     {
         if( nullptr != _activeLevel )
@@ -57,6 +61,7 @@ namespace lcg
                                     , [&nameLevel](Level* i)->bool{ return(i->getName() == nameLevel); } );
             if( it != levels.end() )
             {
+                _deactiveLevel = _activeLevel;
                 currentLevel()->deactivate();
                 _activeLevel = *it;
                 currentLevel()->activate();

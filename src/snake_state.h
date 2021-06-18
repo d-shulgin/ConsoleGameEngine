@@ -30,6 +30,12 @@ private: // Level: start menu
 public:
     StartMenu& level_StartMenu(){ return( _level_StartMenu ); }
 
+private: // Level: control settings
+    ShowConfig _level_ControlSettings;
+
+public:
+    ShowConfig& level_ShowConfig(){ return( _level_ControlSettings ); }
+
 public: // current scene
     virtual const lcg::SceneBuilder* getScene() override;
 

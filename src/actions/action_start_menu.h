@@ -14,7 +14,7 @@ public: // name
     virtual std::string getName() const override { return( class_name() ); }
     virtual std::string getDescription() const override
     {
-        return( "Show main menu" );
+        return( "Stop start screen and show main menu" );
     }
 };
 

@@ -14,7 +14,7 @@ namespace lcg
     void Level::process( float dt )
     {
         processActivate( dt );
-        if( getActive() )
+        if( getActive() && !getWorksToDeactivate() )
         {
             for( auto scene: _scenes )
                 if( nullptr != scene )
@@ -52,7 +52,11 @@ namespace lcg
         if( getWorksToActivate() )
             return;
         if( getWorksToDeactivate() )
+        {
+            active = false;
+            worksToDeactivate = false;
             onDeactivated();
+        }
         worksToActivate = true;
         onActivate();
         return;
@@ -62,7 +66,11 @@ namespace lcg
         if( getWorksToDeactivate() )
             return;
         if( getWorksToActivate() )
+        {
+            active = true;
+            worksToActivate = false;
             onActivated();
+        }
         worksToDeactivate = true;
         onDeactivate();
         return;

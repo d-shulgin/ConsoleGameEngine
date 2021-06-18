@@ -27,10 +27,14 @@ namespace lcg
     private: // levels
         std::vector< Level* > levels;
         Level* _activeLevel = nullptr;
+        Level* _deactiveLevel = nullptr;
 
     protected:
         void attach( Level* );
         Level* currentLevel();
+        Level* deactiveLevel();
+
+    public:
         const Level* getCurrentLevel() const;
 
     public:

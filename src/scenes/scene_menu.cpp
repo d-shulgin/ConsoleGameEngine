@@ -2,6 +2,7 @@
 #include <sstream>
 
 SceneMenu::SceneMenu()
+    : lcg::SceneBuilder()
 {
 }
 SceneMenu::~SceneMenu()
@@ -58,18 +59,6 @@ void SceneMenu::loadCursor()
         cursorAnim.addImage( rsc.cursor(3) );
         cursorAnim.addImage( rsc.cursor(4) );
         cursorAnim.addImage( rsc.cursor(5) );
-//        cursorAnim.addImage( rsc.cursor(6) );
-//        cursorAnim.addImage( rsc.cursor(7) );
-//        cursorAnim.addImage( rsc.cursor(8) );
-//        cursorAnim.addImage( rsc.cursor(9) );
-//        cursorAnim.addImage( rsc.cursor(10) );
-//        cursorAnim.addImage( rsc.cursor(11) );
-//        cursorAnim.addImage( rsc.cursor(12) );
-//        cursorAnim.addImage( rsc.cursor(13) );
-//        cursorAnim.addImage( rsc.cursor(14) );
-//        cursorAnim.addImage( rsc.cursor(15) );
-//        cursorAnim.addImage( rsc.cursor(16) );
-//        cursorAnim.addImage( rsc.cursor(17) );
         cursorAnim.setCycle( true );
         cursorAnim.setRestartFrame( 0 );
         cursorAnim.setSpeed( 12.0f );
@@ -104,8 +93,8 @@ void SceneMenu::initTips()
                           "with the arrows (up / down) or buttons W and S, \n\n"
                           "confirm the selection by pressing Enter." );
     tipStrings.push_back( "The START menu item starts the game." );
-    tipStrings.push_back( "The CONFIG menu item shows the configuration of \n\n"
-                          "the game actions." );
+    tipStrings.push_back( "The CONTROL menu item shows the control settings\n\n"
+                          "of the game." );
     tipStrings.push_back( "The EXIT menu item allows you to exit the game." );
     timeShowTip = TIME_SHOWTIP;
     timeHideTip = 0.0f;
@@ -401,11 +390,11 @@ void SceneMenu::Resources::load()
     {
         _itemConfig = lcg::Image( 56, 5 );
         _itemConfig.beginSymbols().beginColors().beginBgColors()
-                .addSymbols ( "         @@@@   @@@@  @@   @ @@@@@@ @@@@  @@@@          " )
-                .addSymbols ( "        @@   @ @@  @@ @@@  @ @@      @@  @@   @         " )
-                .addSymbols ( "        @@     @@  @@ @@ @ @ @@@@    @@  @@             " )
-                .addSymbols ( "        @@   @ @@  @@ @@  @@ @@      @@  @@  @@         " )
-                .addSymbols ( "         @@@@   @@@@  @@   @ @@     @@@@  @@@@@         " )
+                .addSymbols ( "     @@@@   @@@@  @@   @ @@@@@@ @@@@    @@@@  @@        " )
+                .addSymbols ( "    @@   @ @@  @@ @@@  @   @@   @@  @  @@  @@ @@        " )
+                .addSymbols ( "    @@     @@  @@ @@ @ @   @@   @@@@   @@  @@ @@        " )
+                .addSymbols ( "    @@   @ @@  @@ @@  @@   @@   @@  @  @@  @@ @@        " )
+                .addSymbols ( "     @@@@   @@@@  @@   @   @@   @@   @  @@@@  @@@@@@    " )
                 .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
                 .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )
                 .addColors  ( "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" )

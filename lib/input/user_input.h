@@ -2,6 +2,7 @@
 #define USER_INPUT_H
 
 #include <vector>
+#include <string>
 #include "../game/action.h"
 
 namespace lcg
@@ -19,6 +20,9 @@ namespace lcg
 
     public:
         UserInput& attach( Action* );
+
+    public: // Virtual-Key Codes
+        static std::string getVKeyName( int );
     };
 }
 

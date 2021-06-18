@@ -33,6 +33,7 @@ int main()
         }
     }
     std::cout << "Game completed..." << std::endl;
+    Sleep( 1000 );
 
     return 0;
 }

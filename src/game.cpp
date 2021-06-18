@@ -6,6 +6,7 @@ Game::Game( int width, int height )
 {
     handlerStartMenu .setFnPress( this, &Game::launchStartMenu );
     handlerChoiceItem.setFnPress( this, &Game::choiceStartMenu );
+    handlerComebackFromConfig.setFnPress( this, &Game::comebackFromConfig );
 }
 void Game::onInit()
 {
@@ -13,6 +14,7 @@ void Game::onInit()
     state.init( refInput() );
     _scene_startApp.init();
     _scene_Menu.init();
+    _scene_ControlSettings.init();
     _scene_Debug.init();
 
     action_StartMenu.bind( &state.level_StartApp() );
@@ -26,12 +28,19 @@ void Game::onInit()
     action_ChoiceItem.setCallback( &handlerChoiceItem );
     action_ChoiceItem.setActive( true );
     refInput().attach( &action_ChoiceItem );
+
+    action_CombackFromConfig.bind( &state.level_ShowConfig() );
+    action_CombackFromConfig.setKeyboardShortcut( lcg::KeyboardShortcut({lcg::VKey(VK_ESCAPE)}) );
+    action_CombackFromConfig.setCallback( &handlerComebackFromConfig );
+    action_CombackFromConfig.setActive( true );
+    refInput().attach( &action_CombackFromConfig );
     return;
 }
 void Game::onStart()
 {
     _scene_startApp.build();
     _scene_Menu.build();
+    _scene_ControlSettings.build();
     _scene_Debug.build();
 
     state.level_StartApp()
@@ -40,6 +49,10 @@ void Game::onStart()
     state.level_StartMenu()
             .attach( &_scene_startApp )
             .attach( &_scene_Menu )
+            .attach( &_scene_Debug );
+    state.level_ShowConfig()
+            .attach( &_scene_startApp )
+            .attach( &_scene_ControlSettings )
             .attach( &_scene_Debug );
 }
 void Game::onProcess( float dt )
@@ -74,10 +87,17 @@ void Game::choiceStartMenu()
     switch( state.level_StartMenu().getCurrentMenuItem() )
     {
     case 0:break;
-    case 1:break;
+    case 1:
+        state.level_ShowConfig().setBack( state.getCurrentLevel()->getName() );
+        state.launch( ShowConfig::class_name() );
+        break;
     case 2:
         stop();
         break;
     }
     return;
+}
+void Game::comebackFromConfig()
+{
+    state.launch( state.level_ShowConfig().getBack() );
 }
