@@ -7,6 +7,7 @@
 #include "snake_state.h"
 #include "scenes/package.h"
 #include "actions/action_start_menu.h"
+#include "actions/action_main_menu.h"
 #include "actions/action_choice_item.h"
 #include "actions/action_comeback_from_config.h"
 
@@ -39,13 +40,15 @@ private: // state
     SnakeState state;
 
 private: // scenes
-    SceneStart  _scene_startApp;
-    SceneMenu   _scene_Menu;
-    SceneConfig _scene_ControlSettings;
-    SceneDebug  _scene_Debug;
+    SceneStart     _scene_startApp;
+    SceneMenu      _scene_Menu;
+    SceneConfig    _scene_ControlSettings;
+    SceneGameField _scene_GameField;
+    SceneDebug     _scene_Debug;
 
 private: // actions
     Action_StartMenu action_StartMenu;
+    Action_MainMenu action_MainMenu;
     class Handler_StartMenu final : public lcg::Action::Callback
     {
         std::function<void (Game&)> fnPress;
@@ -56,18 +59,43 @@ private: // actions
         {}
         virtual void onPress() override
         {
+        }
+        virtual void onRelease() override
+        {
             if( nullptr != obj )
                 fnPress( *obj );
         }
-        virtual void onRelease() override{ }
         void setFnPress( Game* o, std::function<void(Game&)> fn )
         {
             obj = o;
             fnPress = fn;
         }
     } handlerStartMenu;
+    class Handler_MainMenu final : public lcg::Action::Callback
+    {
+        std::function<void (Game&)> fnPress;
+        Game* obj = nullptr;
+    public:
+        Handler_MainMenu()
+            : lcg::Action::Callback()
+        {}
+        virtual void onPress() override
+        {
+        }
+        virtual void onRelease() override
+        {
+            if( nullptr != obj )
+                fnPress( *obj );
+        }
+        void setFnPress( Game* o, std::function<void(Game&)> fn )
+        {
+            obj = o;
+            fnPress = fn;
+        }
+    } handlerMainMenu;
 
     void launchStartMenu();
+    void launchMainMenu();
 
     Action_ChoiceItem action_ChoiceItem;
     class Handler_ChoiceItem final : public lcg::Action::Callback
@@ -80,10 +108,12 @@ private: // actions
         {}
         virtual void onPress() override
         {
+        }
+        virtual void onRelease() override
+        {
             if( nullptr != obj )
                 fnPress( *obj );
         }
-        virtual void onRelease() override{ }
         void setFnPress( Game* o, std::function<void(Game&)> fn )
         {
             obj = o;
@@ -104,10 +134,12 @@ private: // actions
         {}
         virtual void onPress() override
         {
+        }
+        virtual void onRelease() override
+        {
             if( nullptr != obj )
                 fnPress( *obj );
         }
-        virtual void onRelease() override{ }
         void setFnPress( Game* o, std::function<void(Game&)> fn )
         {
             obj = o;

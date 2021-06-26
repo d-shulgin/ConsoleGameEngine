@@ -100,7 +100,7 @@ void SceneStart::processInvitation( float dt )
             invitationAnim.start();
         else
         {
-            invitationAnim.update( dt );
+            invitationAnim.process( dt );
             invitation->setImage( invitationAnim.getImage() );
             if( !invitationAnim.getActive() )
                 timeInvitation = INVITATION_TIME__RESTART;

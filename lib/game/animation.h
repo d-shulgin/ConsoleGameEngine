@@ -13,7 +13,7 @@ namespace lcg
         Animation();
         ~Animation();
 
-        void update( float );
+        void process( float );
         void reset();
         void start();
         void stop();
@@ -58,6 +58,22 @@ namespace lcg
         size_t getFrame() const { return( frame ); }
         const Image* getImage() const;
         Animation& addImage( const Image* const );
+
+    public: // callback
+        class Callback
+        {
+        public:
+            Callback(){}
+
+            virtual void onPlayedOnce() = 0;
+            virtual void onStoped() = 0;
+        };
+
+    private:
+        Callback* handler = nullptr;
+
+    public:
+        void setCallback( Callback* v ){ handler = v; }
     };
 }
 

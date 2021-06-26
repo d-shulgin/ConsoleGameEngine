@@ -5,23 +5,29 @@ namespace lcg
     Animation::Animation()
     {
     }
-    void Animation::update( float dt )
+    void Animation::process( float dt )
     {
         if( getActive() )
         {
+            bool onPlayedOnce = false;
+            bool onStoped = false;
             time += dt;
             size_t dFrame = static_cast<size_t>(getSpeed()*time);
             if( dFrame > 0 )
             {
                 time -= static_cast<float>(dFrame)/getSpeed();
                 frame += dFrame;
+                if( !playOnce && frame >= getImages().size() )
+                {
+                    playOnce = true;
+                    onPlayedOnce = true;
+                }
                 if( getCycle() )
                 {
-                    if( !playOnce && frame >= getImages().size() )
-                        playOnce = true;
                     while( frame >= getImages().size() )
                     {
-                        if( getRestartFrame() > 0 && getRestartFrame() < getImages().size() )
+                        if( getRestartFrame() > 0
+                            && getRestartFrame() < getImages().size() )
                             frame -= getImages().size() - getRestartFrame();
                         else
                             frame %= getImages().size();
@@ -31,10 +37,15 @@ namespace lcg
                 {
                     frame = getImages().size() - 1;
                     stop();
+                    onStoped = true;
                 }
                 else if( getImages().empty() )
                     frame = 0;
             }
+            if( nullptr != handler && onPlayedOnce )
+                handler -> onPlayedOnce();
+            if( nullptr != handler && onStoped )
+                handler -> onStoped();
         }
         return;
     }

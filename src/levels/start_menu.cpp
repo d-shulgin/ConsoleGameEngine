@@ -43,6 +43,13 @@ void StartMenu::prepareDraw()
     beginScene();
     return;
 }
+bool StartMenu::onSceneShow( int index )
+{
+    if( index < getScenes().size()
+        && getScenes()[index]->getName() == getIgnoreBgrScene() )
+        return( false );
+    return( true );
+}
 void StartMenu::selectMenuItemUp()
 {
     currentMenuItem --;

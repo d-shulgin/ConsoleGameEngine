@@ -74,6 +74,10 @@ private:
 
     void loadItems();
 
+public:
+    void forStartMenu();
+    void forMainMenu();
+
 private: // Advice
     const float TIME_HIDETIP = 0.200f; // sec
     const float TIME_SHOWTIP = 5.000f; // sec

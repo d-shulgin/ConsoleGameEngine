@@ -21,6 +21,7 @@ namespace lcg
 
     protected:
         virtual void onInit( lcg::UserInput* ){}
+        virtual void onLogic( float ){}
         virtual void onProcess( float ){}
 
     public:
@@ -64,6 +65,7 @@ namespace lcg
     protected:
         std::vector< SceneBuilder* >& refScenes(){ return( _scenes ); }
         void beginScene();
+        virtual bool onSceneShow( int ){ return( true ); }
     };
 }
 

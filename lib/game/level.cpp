@@ -16,9 +16,18 @@ namespace lcg
         processActivate( dt );
         if( getActive() && !getWorksToDeactivate() )
         {
-            for( auto scene: _scenes )
-                if( nullptr != scene )
+//            for( auto scene: _scenes )
+//                if( nullptr != scene )
+//                    scene->process( dt );
+            onLogic( dt );
+            for( std::size_t i = 0; i < _scenes.size(); i++ )
+            {
+                SceneBuilder* scene = _scenes[i];
+                if( nullptr != scene && onSceneShow(i) )
+                {
                     scene->process( dt );
+                }
+            }
             onProcess( dt );
         }
         return;
@@ -92,9 +101,16 @@ namespace lcg
     {
         if( showScene < static_cast<int>(getScenes().size()) )
         {
-            int showId = showScene;
-            showScene ++;
-            return( getScenes()[showId] );
+            int showId = 0;
+            do
+            {
+                showId = showScene;
+                showScene ++;
+            }
+            while( showId < static_cast<int>(getScenes().size())
+                   && !onSceneShow( showId ) );
+            if( showId < static_cast<int>(getScenes().size()) )
+                return( getScenes()[showId] );
         }
         return( nullptr );
     }

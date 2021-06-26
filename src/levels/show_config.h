@@ -22,6 +22,16 @@ protected: // choice
 public: // prepare draw
     void prepareDraw();
 
+private: // scenes
+    std::string ignoreBackgroundScene;
+
+public:
+    const std::string& getIgnoreBgrScene() const { return( ignoreBackgroundScene ); }
+    void setIgnoreBgrScene( const std::string& sceneName ){ ignoreBackgroundScene = sceneName; }
+
+protected:
+    virtual bool onSceneShow( int ) override;
+
 private: //
     std::string backLevelName;
 

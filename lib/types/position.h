@@ -14,6 +14,35 @@ namespace lcg
         explicit Position( short int = 0, short int = 0 );
         ~Position();
 
+        Position( const Position& cpy )
+        {
+            _x = cpy.x();
+            _y = cpy.y();
+        }
+        Position& operator = ( const Position& cpy )
+        {
+            if( this != &cpy )
+            {
+                _x = cpy.x();
+                _y = cpy.y();
+            }
+            return( *this );
+        }
+        Position( Position&& mv )
+            : _x( mv._x )
+            , _y( mv._y )
+        {
+        }
+        Position& operator = ( Position&& mv )
+        {
+            if( this != &mv )
+            {
+                _x = mv._x;
+                _y = mv._y;
+            }
+            return( *this );
+        }
+
         bool operator == ( const Position& p ) const
         {
             return( x() == p.x() && y() == p.y() );

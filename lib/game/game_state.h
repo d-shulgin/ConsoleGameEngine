@@ -48,20 +48,6 @@ namespace lcg
 
     protected:
         virtual void onPrepareDraw(){}
-
-
-        /// @deprecated:
-#ifdef DEPRECATED
-    private: // scenes
-        std::map< std::string, const Level* > levels;
-
-    public:
-        Level& refLevel( const LevelID& id )
-        {
-            return( levels[id] );
-        }
-        const Level& crefLevel( const LevelID& id ) const;
-#endif // DEPRECATED
     };
 }
 

@@ -37,7 +37,19 @@ SOURCES += main.cpp \
     src/actions/action_choice_item.cpp \
     src/scenes/scene_config.cpp \
     src/levels/show_config.cpp \
-    src/actions/action_comeback_from_config.cpp
+    src/actions/action_comeback_from_config.cpp \
+    src/scenes/scene_game_field.cpp \
+    src/levels/game_field.cpp \
+    src/actions/action_main_menu.cpp \
+    src/characters/food.cpp \
+    src/characters/rabbit.cpp \
+    src/characters/apple.cpp \
+    src/characters/snake.cpp \
+    src/actions/action_snake_move_up.cpp \
+    src/actions/action_snake_move_down.cpp \
+    src/actions/action_snake_move_left.cpp \
+    src/actions/action_snake_move_right.cpp \
+    src/characters/foods.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -76,5 +88,18 @@ HEADERS += \
     src/actions/action_choice_item.h \
     src/scenes/scene_config.h \
     src/levels/show_config.h \
-    src/actions/action_comeback_from_config.h
+    src/actions/action_comeback_from_config.h \
+    src/scenes/scene_game_field.h \
+    src/levels/game_field.h \
+    src/actions/action_main_menu.h \
+    src/characters/food.h \
+    src/characters/rabbit.h \
+    src/characters/apple.h \
+    src/characters/snake.h \
+    src/characters/package.h \
+    src/actions/action_snake_move_up.h \
+    src/actions/action_snake_move_down.h \
+    src/actions/action_snake_move_left.h \
+    src/actions/action_snake_move_right.h \
+    src/characters/foods.h
 

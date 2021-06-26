@@ -86,6 +86,18 @@ void SceneMenu::loadItems()
     items[2]->setPosition( 2, 4+2*6);
     return;
 }
+void SceneMenu::forStartMenu()
+{
+    if( nullptr != items[0] )
+        items[0]->setImage( rsc.itemStart() );
+    return;
+}
+void SceneMenu::forMainMenu()
+{
+    if( nullptr != items[0] )
+        items[0]->setImage( rsc.itemResume() );
+    return;
+}
 void SceneMenu::initTips()
 {
     //                     123456789012345678901234567890123456789012345678
@@ -140,7 +152,7 @@ void SceneMenu::processTips( float dt )
 }
 void SceneMenu::onProcess( float dt )
 {
-    cursorAnim.update( dt );
+    cursorAnim.process( dt );
     if( nullptr != cursor )
         cursor->setImage( cursorAnim.getImage() );
     processTips( dt );

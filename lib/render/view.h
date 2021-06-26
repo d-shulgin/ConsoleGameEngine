@@ -16,11 +16,21 @@ namespace lcg
         virtual ~View();
 
         template< typename T >
-        const T* as() const
+        T* as()
         {
             if( typeid(T).before(typeid(*this)) || typeid(T) == typeid(*this) )
+            {
+                return( dynamic_cast<T*>(this) );
+            }
+            return( nullptr );
+        }
+        template< typename T >
+        const T* as_const() const
+        {
+            if( typeid(T).before(typeid(*this)) || typeid(T) == typeid(*this) )
+            {
                 return( dynamic_cast<const T*>(this) );
-            /// @todo: need throw
+            }
             return( nullptr );
         }
 

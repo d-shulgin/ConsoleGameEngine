@@ -36,6 +36,13 @@ private: // Level: control settings
 public:
     ShowConfig& level_ShowConfig(){ return( _level_ControlSettings ); }
 
+private: // Level: game field
+    GameField _level_GameField;
+
+public:
+    GameField& level_GameField(){ return( _level_GameField ); }
+    bool startedGame() const { return( _level_GameField.started() ); }
+
 public: // current scene
     virtual const lcg::SceneBuilder* getScene() override;
 

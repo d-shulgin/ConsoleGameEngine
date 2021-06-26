@@ -24,6 +24,16 @@ protected: // choice
 public: // prepare draw
     void prepareDraw();
 
+private: // scenes
+    std::string ignoreBackgroundScene;
+
+public:
+    const std::string& getIgnoreBgrScene() const { return( ignoreBackgroundScene ); }
+    void setIgnoreBgrScene( const std::string& sceneName ){ ignoreBackgroundScene = sceneName; }
+
+protected:
+    virtual bool onSceneShow( int ) override;
+
 private: // actions
     Action_SelectItemUp   action_SelectMenuItemUp;
     Action_SelectItemDown action_SelectMenuItemDown;
@@ -39,17 +49,18 @@ private: // actions
         {}
         virtual void onPress() override
         {
+        }
+        virtual void onRelease() override
+        {
             if( nullptr != obj )
                 fnPress( *obj );
         }
-        virtual void onRelease() override {}
         void setFnPress( StartMenu* o, std::function<void(StartMenu&)> fn )
         {
             obj = o;
             fnPress = fn;
         }
     } handlerSelectItemUp;
-
     class Handler_SelectItemDown final : public lcg::Action::Callback
     {
         std::function<void (StartMenu&)> fnPress;
@@ -61,10 +72,12 @@ private: // actions
         {}
         virtual void onPress() override
         {
+        }
+        virtual void onRelease() override
+        {
             if( nullptr != obj )
                 fnPress( *obj );
         }
-        virtual void onRelease() override {}
         void setFnPress( StartMenu* o, std::function<void(StartMenu&)> fn )
         {
             obj = o;
