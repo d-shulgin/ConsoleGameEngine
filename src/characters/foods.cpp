@@ -15,6 +15,16 @@ void Foods::init( int w, int h )
     rabbits.clear();
     rabbits.reserve( FOODS_MAX_AMOUNT );
 }
+void Foods::start()
+{
+    foods.clear();
+    timeRebord = TIME_REBORN_FOOD;
+    for( std::size_t i = 0; i < apples.size(); ++i )
+        apples[i].setActive( false );
+    for( std::size_t i = 0; i < rabbits.size(); ++i )
+        rabbits[i].setActive( false );
+    return;
+}
 void Foods::process( float dt, const Snake& snake )
 {
     processFoods( dt );
@@ -40,7 +50,7 @@ void Foods::eat( const lcg::Position& snakePosition )
     {
         food -> setActive( false );
         if( nullptr != handler )
-            handler -> onFoodEaten( food->id(), food->getScore() );
+            handler -> onFoodEaten( food->id(), food->getScore(), food->getHP() );
     }
     return;
 }
@@ -53,9 +63,19 @@ void Foods::processFoods( float dt )
         if( nullptr != food )
         {
             if( food -> getActive() )
+            {
                 food -> process( dt );
+                if( food->as_const<Rabbit>() != nullptr && nullptr != handler )
+                {
+                    handler -> onFoodChanged( food->id(), dt );
+                }
+            }
             if( !food -> getActive() )
+            {
                 it = foods.erase( it );
+                if( nullptr != handler )
+                    handler -> onFoodEscaped( food->id() );
+            }
         }
         if( it != foods.end() )
             ++it;
@@ -96,7 +116,7 @@ bool Foods::giveFood( std::vector< lcg::Position >& busy )
     {
         unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::mt19937_64 gen(seed);
-        if( (/*gen() % 3 < 2*/true && giveApple()) || giveRabbit() )
+        if( (gen() % 5 < 4 && giveApple()) || giveRabbit() )
         {
             Food* food = foods.back();
             if( nullptr != food )

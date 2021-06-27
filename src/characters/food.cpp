@@ -6,7 +6,9 @@ Food::Food( int id )
 }
 void Food::process( float dt )
 {
-    onProcess( dt );
+    if( getActive() )
+        onProcess( dt );
+    return;
 }
 Food::~Food()
 {

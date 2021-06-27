@@ -42,6 +42,11 @@ private: // Level: game field
 public:
     GameField& level_GameField(){ return( _level_GameField ); }
     bool startedGame() const { return( _level_GameField.started() ); }
+    bool checkGameOver() const
+    {
+        return( _level_GameField.started()
+                && _level_GameField.gameOver() );
+    }
 
 public: // current scene
     virtual const lcg::SceneBuilder* getScene() override;

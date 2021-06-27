@@ -24,7 +24,7 @@ void SceneMenu::onBuild()
     if( nullptr != root )
     {
         root -> setPosition( 30, 10 );
-        root -> addChild( background = new lcg::Sprite("logotype") );
+        root -> addChild( background = new lcg::Sprite("background") );
         root -> addChild( cursor = new lcg::Sprite("cursor") );
         root -> addChild( tip = new lcg::Text("tip") );
         for( int i = 0; i < AMOUNT_MENUITEMS; i++ )

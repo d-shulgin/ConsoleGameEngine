@@ -10,6 +10,19 @@ void Snake::init( const lcg::Position& position )
     initChain( position );
     return;
 }
+void Snake::start()
+{
+    livePoints = LIVE_POINTS_START;
+    timeToMove = TIME_MOVE_START;
+    timeSpeed = TIME_MOVE_START;
+    blinkCount = 0;
+    timeBlink = BLINK_PERIOD;
+    show = true;
+    initChain( restartPosition );
+    desiredDirection = Stop;
+    setDirection( Stop );
+    return;
+}
 void Snake::process( float dt )
 {
     logicMove( dt );
@@ -25,6 +38,7 @@ void Snake::process( float dt )
 void Snake::dieDieDie()
 {
     initChain( restartPosition );
+    desiredDirection = Stop;
     setDirection( Stop );
     if( nullptr != handler )
         handler -> onLivesOver();
@@ -34,6 +48,12 @@ void Snake::die()
 {
     livePoints --;
     startDeathAnimation();
+    return;
+}
+void Snake::healing( int health )
+{
+    livePoints += health;
+    livePoints %= (LIVE_POINTS_MAX + 1);
     return;
 }
 void Snake::biteYourself()
@@ -56,9 +76,14 @@ void Snake::logicDeathAnimation( float dt )
                     dieDieDie();
                     return;
                 }
-                timeToMove = TIME_MOVE_START;
-                timeSpeed  = TIME_MOVE_START;
+                timeToMove *= 4;//TIME_MOVE_START;
+                if( timeToMove > TIME_MOVE_START )
+                    timeToMove = TIME_MOVE_START;
+                timeSpeed  *= 4;//TIME_MOVE_START;
+                if( timeSpeed > TIME_MOVE_START )
+                    timeSpeed = TIME_MOVE_START;
                 initChain( restartPosition );
+                desiredDirection = Stop;
                 setDirection( Stop );
                 if( nullptr != handler )
                     handler -> onShowChanged();
@@ -88,8 +113,17 @@ void Snake::initChain( const lcg::Position& position )
         ChainLink& link = chainLinks[i];
         link.setPosition( position.x() + i, position.y() );
         tailPosition = link.getPosition();
+        lastTailPosition = link.getPosition() + lcg::Position( 1, 0 );
     }
     return;
+}
+void Snake::grow()
+{
+    if( chainLinks.size() < LENGTH_MAX )
+    {
+        chainLinks.push_back( ChainLink() );
+        chainLinks.back().setPosition( lastTailPosition );
+    }
 }
 void Snake::logicMove( float dt )
 {
@@ -159,5 +193,12 @@ void Snake::moveTo( const lcg::Position& position )
             lastTailPosition = lastPosition;
         }
     }
+    return;
+}
+void Snake::increaseSpeed()
+{
+    timeSpeed -= TIME_SPEED_INC;
+    if( timeSpeed < TIME_MOVE_MINIMAL )
+        timeSpeed = TIME_MOVE_MINIMAL;
     return;
 }

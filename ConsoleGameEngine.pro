@@ -49,7 +49,8 @@ SOURCES += main.cpp \
     src/actions/action_snake_move_down.cpp \
     src/actions/action_snake_move_left.cpp \
     src/actions/action_snake_move_right.cpp \
-    src/characters/foods.cpp
+    src/characters/foods.cpp \
+    src/scenes/scene_game_over.cpp
 
 HEADERS += \
     lib/engine.h \
@@ -101,5 +102,6 @@ HEADERS += \
     src/actions/action_snake_move_down.h \
     src/actions/action_snake_move_left.h \
     src/actions/action_snake_move_right.h \
-    src/characters/foods.h
+    src/characters/foods.h \
+    src/scenes/scene_game_over.h
 

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include "../scenes/scene_game_field.h"
+#include "../scenes/scene_game_over.h"
 #include "../scenes/scene_debug.h"
 
 GameField::GameField()
@@ -12,11 +13,13 @@ GameField::GameField()
     handlerSnakeEvents.eventPositionChanged( &GameField::snakePositionChanged );
     handlerSnakeEvents.eventDirectionChanged( &GameField::snakeDirectionChanged );
     handlerSnakeEvents.eventDeathAnimationStarted( &GameField::snakeDie );
-    handlerSnakeEvents.eventLivesOver( &GameField::gameOver );
+    handlerSnakeEvents.eventLivesOver( &GameField::logicGameOver );
     // foods
     handlerFoodsEvents = Handler_FoodsEvents( this );
     handlerFoodsEvents.eventFoodAdded( &GameField::foodAdded );
     handlerFoodsEvents.eventFoodEaten( &GameField::foodEaten );
+    handlerFoodsEvents.eventFoodEscaped( &GameField::foodEscaped );
+    handlerFoodsEvents.eventFoodChanged( &GameField::foodChanged );
     // actions
     handlerMoveUp.setFnPress   ( this, &GameField::moveUpSnake    );
     handlerMoveDown.setFnPress ( this, &GameField::moveDownSnake  );
@@ -38,34 +41,36 @@ void GameField::onLogic( float dt )
     {
         snake.process( dt );
         foods.process( dt, snake );
-        if( !started() )
-        {
-            _started = true;
-            logicSnake();
-        }
-        logicFoods();
+//        if( !started() )
+//        {
+//            _started = true;
+//            logicSnake();
+//            logicFoods();
+//        }
 
+//        SceneGameField* sc_GF = nullptr;
 //        auto it = std::find_if( refScenes().begin()
 //                                , refScenes().end()
 //                                , [](lcg::SceneBuilder* scene){
-//                  return(scene->getName() == SceneDebug::class_name()); } );
+//                  return(scene->getName() == SceneGameField::class_name()); } );
 //        if( it != refScenes().end() )
 //        {
+//            sc_GF = (*it)->as<SceneGameField>();
+//        }
+//        auto itD = std::find_if( refScenes().begin()
+//                                , refScenes().end()
+//                                , [](lcg::SceneBuilder* scene){
+//                  return(scene->getName() == SceneDebug::class_name()); } );
+//        if( itD != refScenes().end() )
+//        {
 //            std::stringstream ss;
-//            ss << "foods: " << foods.getFoods().size() << std::endl;
-//            std::list< Food* >::const_iterator itFood = foods.getFoods().cbegin();
-//            while( itFood != foods.getFoods().cend() )
-//            {
-//                const Food* food = *itFood;
-//                if( food->as_const<Apple>() != nullptr )
-//                    ss << "apple: id = " << food->id() << "; active:" << (food->getActive()?"True":"False") << std::endl;
-//                else if( food->as_const<Rabbit>() != nullptr )
-//                    ss << "rabbit: id = " << food->id() << "; active:" << (food->getActive()?"True":"False") << std::endl;
-//                ++itFood;
-//            }
-//            SceneDebug* scene = (*it)->as<SceneDebug>();
+//            SceneDebug* scene = (*itD)->as<SceneDebug>();
 //            if( nullptr != scene )
+//            {
+//                ss << "   snake.size: " << snake.getChainLinks().size()
+//                   << ";   view snake.size: " << sc_GF->getSnakeLength() << std::endl;
 //                scene -> setConsole( ss.str() );
+//            }
 //        }
     }
     return;
@@ -73,13 +78,43 @@ void GameField::onLogic( float dt )
 // choice
 void GameField::onActivate()
 {
+    bool restarted = false;
+    if( !started() || gameOver() )
+    {
+        if( gameOver() )
+            restarted = true;
+        _started = true;
+        _gameOver = false;
+        scores = 0;
+        incScores = 0;
+        growScores = 0;
+        snake.start();
+        foods.start();
+        snake.process( 0.0f );
+        foods.process( 0.0f, snake );
+        logicSnake();
+        logicFoods();
+        if( restarted )
+            snakeDirectionChanged( snake.getDirection() );
+    }
     auto it = std::find_if( refScenes().begin()
                             , refScenes().end()
                             , [](lcg::SceneBuilder* scene){
               return(scene->getName() == SceneGameField::class_name()); } );
     if( it != refScenes().end() )
     {
-        (*it)->as<SceneGameField>()->setPause( false );
+        SceneGameField* scene = (*it)->as<SceneGameField>();
+        if( nullptr != scene )
+        {
+            scene -> setPause( false );
+            if( restarted )
+            {
+                std::stringstream ss;
+                ss << scores;
+                scene -> restart();
+                scene -> setScorePoints( "" );
+            }
+        }
     }
     return;
 }
@@ -102,8 +137,11 @@ void GameField::prepareDraw()
     return;
 }
 // game
-void GameField::gameOver()
+void GameField::logicGameOver()
 {
+    _gameOver = true;
+    snakeDie();
+    return;
 }
 // snake
 void GameField::snakeShowChanged()
@@ -164,6 +202,8 @@ void GameField::snakeDie()
     action_MoveUp.setActive( false );
     action_MoveDown.setActive( false );
     action_MoveRight.setActive( false );
+    incScores = 0;
+    growScores = 0;
     return;
 }
 void GameField::logicSnake()
@@ -183,8 +223,10 @@ void GameField::logicSnake()
 // foods
 void GameField::foodAdded()
 {
+    logicFoods();
+    return;
 }
-void GameField::foodEaten( int idFood, int points )
+void GameField::foodEaten( int idFood, int points, int health )
 {
     auto it = std::find_if( refScenes().begin()
                             , refScenes().end()
@@ -197,9 +239,23 @@ void GameField::foodEaten( int idFood, int points )
         {
             scene -> hideFood( idFood );
             scores += points;
+            incScores += points;
+            if( incScores > 200 )
+            {
+                incScores = 0;
+                snake.increaseSpeed();
+            }
+            growScores += points;
+            if( growScores > 300 )
+            {
+                growScores = 0;
+                snake.grow();
+            }
             std::stringstream ss;
             ss << scores;
             scene -> setScorePoints( ss.str() );
+            snake.healing( health );
+            scene -> setLiveScore( snake.getLivePoints(), Snake::LIVE_POINTS_MAX );
         }
     }
 
@@ -229,6 +285,37 @@ void GameField::foodEaten( int idFood, int points )
 
     return;
 }
+void GameField::foodEscaped( int idFood )
+{
+    auto it = std::find_if( refScenes().begin()
+                            , refScenes().end()
+                            , [](lcg::SceneBuilder* scene){
+              return(scene->getName() == SceneGameField::class_name()); } );
+    if( it != refScenes().end() )
+    {
+        SceneGameField* scene = (*it)->as<SceneGameField>();
+        if( nullptr != scene )
+        {
+            scene -> hideFood( idFood );
+        }
+    }
+    return;
+}
+void GameField::foodChanged( int idFood, float dt )
+{
+    auto it = std::find_if( refScenes().begin()
+                            , refScenes().end()
+                            , [](lcg::SceneBuilder* scene){
+              return(scene->getName() == SceneGameField::class_name()); } );
+    if( it != refScenes().end() )
+    {
+        SceneGameField* scene = (*it)->as<SceneGameField>();
+        if( nullptr != scene )
+        {
+            scene -> changeFood( idFood, dt );
+        }
+    }
+}
 void GameField::logicFoods()
 {
     auto it = std::find_if( refScenes().begin()
@@ -241,6 +328,15 @@ void GameField::logicFoods()
         if( nullptr != scene )
             scene -> setFoods( foods );
     }
+}
+// scenes
+bool GameField::onSceneShow( int index )
+{
+    if( index < getScenes().size()
+        && getScenes()[index]->getName() == SceneGameOver::class_name()
+        && !gameOver() )
+        return( false );
+    return( true );
 }
 // actions
 void GameField::initActions( lcg::UserInput* input )

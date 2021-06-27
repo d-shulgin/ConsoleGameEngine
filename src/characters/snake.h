@@ -30,6 +30,7 @@ public:
     Snake();
 
     void init( const lcg::Position& );
+    void start();
     void process( float );
 
 public: // live points
@@ -44,6 +45,7 @@ private:
 public:
     int getLivePoints() const { return( livePoints ); }
     void die();
+    void healing( int );
     void biteYourself();
 
 private: // die animation
@@ -81,6 +83,7 @@ public:
     }
     const lcg::Position& getLastTailPosition() const { return( lastTailPosition ); }
     int getLength() const { return( chainLinks.size() ); }
+    void grow();
 
 public: // move control
     enum MoveDirection
@@ -95,6 +98,7 @@ public: // move control
 private:
     const float TIME_MOVE_START = 0.40f; // sec
     const float TIME_MOVE_MINIMAL = 0.0750f; // sec
+    const float TIME_SPEED_INC = 0.025f;
 
     MoveDirection direction = Stop;
     MoveDirection desiredDirection = Stop;
@@ -116,6 +120,7 @@ public:
             changeDirection();
         return;
     }
+    void increaseSpeed();
 
 public: // callback
     class Callback

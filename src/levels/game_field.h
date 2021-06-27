@@ -36,11 +36,13 @@ public: // prepare draw
 
 private: // game
     bool _started = false;
+    bool _gameOver = false;
 
-    void gameOver();
+    void logicGameOver();
 
 public:
     bool started() const { return( _started ); }
+    bool gameOver() const { return( _gameOver ); }
 
 
 private: // field
@@ -50,7 +52,8 @@ private: // field
 
 private: // scores
     int scores = 0;
-
+    int incScores = 0;
+    int growScores = 0;
 
 private: // snake
     Snake snake;
@@ -133,7 +136,9 @@ private: // foods
     {
         GameField* obj = nullptr;
         std::function< void (GameField&) > fnFoodAdded;
-        std::function< void (GameField&, int, int) > fnFoodEaten;
+        std::function< void (GameField&, int, int, int) > fnFoodEaten;
+        std::function< void (GameField&, int) > fnFoodEscaped;
+        std::function< void (GameField&, int, float) > fnFoodChanged;
 
     public:
         explicit Handler_FoodsEvents( GameField* ptr = nullptr )
@@ -150,20 +155,45 @@ private: // foods
             fnFoodAdded = fn;
         }
 
-        virtual void onFoodEaten( int idFood, int scores )
+        virtual void onFoodEaten( int idFood, int scores, int HP ) override
         {
             if( nullptr != obj && fnFoodEaten )
-                fnFoodEaten( *obj, idFood, scores );
+                fnFoodEaten( *obj, idFood, scores, HP );
         }
-        void eventFoodEaten( std::function< void (GameField&, int, int) > fn )
+        void eventFoodEaten( std::function< void (GameField&, int, int, int) > fn )
         {
             fnFoodEaten = fn;
+        }
+
+        virtual void onFoodEscaped( int idFood ) override
+        {
+            if( nullptr != obj && fnFoodEscaped )
+                fnFoodEscaped( *obj, idFood );
+        }
+        void eventFoodEscaped( std::function< void (GameField&, int) > fn )
+        {
+            fnFoodEscaped = fn;
+        }
+
+        virtual void onFoodChanged( int idFood, float dt ) override
+        {
+            if( nullptr != obj && fnFoodChanged )
+                fnFoodChanged( *obj, idFood, dt );
+        }
+        void eventFoodChanged( std::function< void (GameField&, int, float) > fn )
+        {
+            fnFoodChanged = fn;
         }
     } handlerFoodsEvents;
 
     void foodAdded();
-    void foodEaten( int, int );
+    void foodEaten( int, int, int );
+    void foodEscaped( int );
+    void foodChanged( int, float );
     void logicFoods();
+
+protected: // scenes
+    virtual bool onSceneShow( int ) override;
 
 private: // actions
     Action_SnakeMoveUp    action_MoveUp;

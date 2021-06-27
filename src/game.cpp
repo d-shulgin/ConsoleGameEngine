@@ -17,6 +17,7 @@ void Game::onInit()
     _scene_Menu.init();
     _scene_ControlSettings.init();
     _scene_GameField.init();
+    _scene_GameOver.init();
     _scene_Debug.init();
 
     action_StartMenu.bind( &state.level_StartApp() );
@@ -50,6 +51,7 @@ void Game::onStart()
     _scene_Menu.build();
     _scene_ControlSettings.build();
     _scene_GameField.build();
+    _scene_GameOver.build();
     _scene_Debug.build();
 
     state.level_StartApp()
@@ -67,6 +69,7 @@ void Game::onStart()
             .attach( &_scene_Debug );
     state.level_GameField()
             .attach( &_scene_GameField )
+            .attach( &_scene_GameOver )
             .attach( &_scene_Debug );
 }
 void Game::onProcess( float dt )
@@ -100,9 +103,16 @@ void Game::launchStartMenu()
 }
 void Game::launchMainMenu()
 {
-    _scene_Menu.forMainMenu();
-    state.level_StartMenu().setIgnoreBgrScene( _scene_startApp.getName() );
-    state.launch( StartMenu::class_name() );
+    if( state.checkGameOver() )
+    {
+        launchStartMenu();
+    }
+    else
+    {
+        _scene_Menu.forMainMenu();
+        state.level_StartMenu().setIgnoreBgrScene( _scene_startApp.getName() );
+        state.launch( StartMenu::class_name() );
+    }
     return;
 }
 void Game::choiceStartMenu()

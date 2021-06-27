@@ -44,6 +44,7 @@ private: // scenes
     SceneMenu      _scene_Menu;
     SceneConfig    _scene_ControlSettings;
     SceneGameField _scene_GameField;
+    SceneGameOver  _scene_GameOver;
     SceneDebug     _scene_Debug;
 
 private: // actions

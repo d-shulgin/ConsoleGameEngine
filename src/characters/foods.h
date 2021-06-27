@@ -15,6 +15,7 @@ public:
     Foods();
 
     void init( int, int );
+    void start();
     void process( float, const Snake& );
     void eat( const lcg::Position& );
 
@@ -27,7 +28,7 @@ private: // foods
     std::list< Food* > foods;
     int idFood = 0;
 
-    const float TIME_REBORN_FOOD = 5.0f; // sec
+    const float TIME_REBORN_FOOD = 2.0f; // sec
     float timeRebord = TIME_REBORN_FOOD;
 
     void processFoods( float );
@@ -54,7 +55,9 @@ public: // callback
         Callback(){}
 
         virtual void onFoodAdded() = 0;
-        virtual void onFoodEaten( int, int ) = 0;
+        virtual void onFoodEaten( int, int, int ) = 0;
+        virtual void onFoodEscaped( int ) = 0;
+        virtual void onFoodChanged( int, float ) = 0;
     };
 
 private:

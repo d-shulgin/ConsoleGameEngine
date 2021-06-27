@@ -148,41 +148,52 @@ void SceneGameField::giveApple( const Apple* apple )
     }
     return;
 }
-
-void SceneGameField::giveRabbit( const Rabbit* )
+void SceneGameField::giveRabbit( const Rabbit* rabbit )
 {
-}
-void SceneGameField::escapedRabbit( int index )
-{
-}
-int SceneGameField::giveRabbit( int cl, int rw, float time )
-{
-    if( rw < 1 )
-        return( -1 );
+    auto it = std::find_if( rabbits.begin()
+                            , rabbits.end()
+                            , [&rabbit](RabbitSprite r){ return( r.id() == rabbit->id() ); } );
 
-    int x = 4 + cl*7;
-    int y = 7 + rw*3;
+    int x = 4 + rabbit->getPosition().x()*7;
+    int y = 7 + rabbit->getPosition().y()*3;
 
-    if( !rabbits.empty() )
+    if( it != rabbits.end() )
     {
-        for( std::size_t i = 0; i < rabbits.size(); i++ )
-            if( rabbits[i].checkFree() )
-            {
-                rabbits[i].show(x, y, time);
-                return( static_cast<int>(i) );
-            }
+        (*it).show( x, y, rabbit->getTimeLive() );
     }
-    if( rabbits.size() < 4 )
+    else
     {
-        rabbits.push_back( RabbitSprite() );
-        rabbits.back().build( static_cast<int>(rabbits.size() - 1)
-                              , rabbitsGroup, rsc );
-        rabbits.back().show(x, y, time);
-        return( static_cast<int>(rabbits.size() - 1) );
+        rabbits.push_back( RabbitSprite(rabbit->id()) );
+        rabbits.back().build( rabbits.size(), rabbitsGroup, rsc );
+        rabbits.back().show( x, y, rabbit->getTimeLive() );
     }
-    return( -1 );
+    return;
 }
-
+//int SceneGameField::giveRabbit( int cl, int rw, float time )
+//{
+//    if( rw < 1 )
+//        return( -1 );
+//    int x = 4 + cl*7;
+//    int y = 7 + rw*3;
+//    if( !rabbits.empty() )
+//    {
+//        for( std::size_t i = 0; i < rabbits.size(); i++ )
+//            if( rabbits[i].checkFree() )
+//            {
+//                rabbits[i].show(x, y, time);
+//                return( static_cast<int>(i) );
+//            }
+//    }
+//    if( rabbits.size() < 4 )
+//    {
+//        rabbits.push_back( RabbitSprite() );
+//        rabbits.back().build( static_cast<int>(rabbits.size() - 1)
+//                              , rabbitsGroup, rsc );
+//        rabbits.back().show(x, y, time);
+//        return( static_cast<int>(rabbits.size() - 1) );
+//    }
+//    return( -1 );
+//}
 void SceneGameField::setFoods( const Foods& foods )
 {
     if( nullptr != applesGroup && nullptr != rabbitsGroup )
@@ -200,6 +211,19 @@ void SceneGameField::setFoods( const Foods& foods )
     }
     return;
 }
+void SceneGameField::changeFood( int idFood, float dt )
+{
+    for( std::size_t i = 0; i < rabbits.size(); ++i )
+    {
+        RabbitSprite& rabbit = rabbits[i];
+        if( rabbit.id() == idFood )
+        {
+            rabbit.setElapsedTime( dt );
+            break;
+        }
+    }
+    return;
+}
 void SceneGameField::hideFood( int idFood )
 {
     for( std::size_t i = 0; i < apples.size(); ++i )
@@ -211,22 +235,34 @@ void SceneGameField::hideFood( int idFood )
             break;
         }
     }
+    for( std::size_t i = 0; i < rabbits.size(); ++i )
+    {
+        RabbitSprite& rabbit = rabbits[i];
+        if( rabbit.id() == idFood )
+        {
+            rabbit.hide();
+            break;
+        }
+    }
     return;
 }
-
 void SceneGameField::onProcess( float dt )
 {
     if( getPaused() )
         return;
-
-    for( std::size_t i = 0; i < rabbits.size(); i++ )
+    return;
+}
+void SceneGameField::restart()
+{
+    for( std::size_t i = 0; i < apples.size(); ++i )
     {
-        if( !rabbits[i].checkFree() )
-        {
-            rabbits[i].process( dt );
-            if( rabbits[i].checkFree() )
-                escapedRabbit( i );
-        }
+        AppleSprite& apple = apples[i];
+        apple.hide();
+    }
+    for( std::size_t i = 0; i < rabbits.size(); ++i )
+    {
+        RabbitSprite& rabbit = rabbits[i];
+        rabbit.hide();
     }
     return;
 }
@@ -752,66 +788,69 @@ void SceneGameField::RabbitSprite::build( int index, lcg::Group* root, const Res
     }
     return;
 }
-void SceneGameField::RabbitSprite::show( int x, int y , float time )
+void SceneGameField::RabbitSprite::show( short int x, short int y, float time )
 {
-    if( checkFree() )
+    float speed = static_cast<float>(bodyAnim.getImages().size()) / time;
+    bodyAnim.setSpeed( speed );
+    bodyAnim.start();
+    thinkAnim.setSpeed( speed );
+    thinkAnim.start();
+    if( nullptr != body )
     {
-        _free = false;
-        float speed = static_cast<float>(bodyAnim.getImages().size()) / time;
-        bodyAnim.setSpeed( speed );
-        bodyAnim.start();
-        thinkAnim.setSpeed( speed );
-        thinkAnim.start();
-        if( nullptr != body )
-        {
-            body -> setImage( bodyAnim.getImage() );
-            body -> setPosition( x, y );
-            body -> setVisible( true );
-        }
-        if( nullptr != think )
-        {
-            think -> setImage( thinkAnim.getImage() );
-            think -> setPosition( x, y - 3 );
-            think -> setVisible( true );
-        }
+        body -> setImage( bodyAnim.getImage() );
+        body -> setPosition( x, y );
+        body -> setVisible( true );
+    }
+    if( nullptr != think )
+    {
+        think -> setImage( thinkAnim.getImage() );
+        think -> setPosition( x, y - 3 );
+        think -> setVisible( true );
     }
     return;
 }
 void SceneGameField::RabbitSprite::hide()
 {
-    if( !checkFree() )
+    bodyAnim.stop();
+    thinkAnim.stop();
+    if( nullptr != body )
     {
-        _free = true;
-        bodyAnim.stop();
-        thinkAnim.stop();
-        if( nullptr != body )
-        {
-            body -> setVisible( false );
-        }
-        if( nullptr != think )
-        {
-            think -> setVisible( false );
-        }
+        body -> setVisible( false );
+    }
+    if( nullptr != think )
+    {
+        think -> setVisible( false );
     }
     return;
 }
-void SceneGameField::RabbitSprite::process( float dt )
+void SceneGameField::RabbitSprite::setElapsedTime( float dt )
 {
-    if( !checkFree() && nullptr != body && nullptr != think )
+    if( nullptr != body && nullptr != think )
     {
         bodyAnim.process( dt );
         thinkAnim.process( dt );
         body -> setImage( bodyAnim.getImage() );
         think -> setImage( thinkAnim.getImage() );
-        if( !bodyAnim.getActive() )
-        {
-            _free = true;
-            body -> setVisible( false );
-            think -> setVisible( false );
-        }
     }
     return;
 }
+//void SceneGameField::RabbitSprite::process( float dt )
+//{
+//    if( !checkFree() && nullptr != body && nullptr != think )
+//    {
+//        bodyAnim.process( dt );
+//        thinkAnim.process( dt );
+//        body -> setImage( bodyAnim.getImage() );
+//        think -> setImage( thinkAnim.getImage() );
+//        if( !bodyAnim.getActive() )
+//        {
+//            _free = true;
+//            body -> setVisible( false );
+//            think -> setVisible( false );
+//        }
+//    }
+//    return;
+//}
 
 
 void SceneGameField::AppleSprite::build( int index, lcg::Group* root, const Resources& rsc )

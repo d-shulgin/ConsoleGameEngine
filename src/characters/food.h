@@ -41,7 +41,14 @@ private: // active
 
 public:
     bool getActive() const { return( active ); }
-    void setActive( bool activate ){ active = activate; }
+    void setActive( bool activate )
+    {
+        active = activate;
+        onActivated();
+    }
+
+protected:
+    virtual void onActivated(){}
 
 private: // position
     lcg::Position position;
@@ -57,6 +64,7 @@ public:
 
 public: // score
     virtual int getScore() const { return( 0 ); }
+    virtual int getHP() const { return( 0 ); }
 };
 
 #endif // FOOD_H

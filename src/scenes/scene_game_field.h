@@ -92,6 +92,7 @@ private: // snake
 
 public:
     void setSnake( const Snake& );
+    std::size_t getSnakeLength() const { return( chainLinks.size() ); }
 
 private: // foods
     class AppleSprite
@@ -119,13 +120,16 @@ private: // foods
 private: // rabbit
     class RabbitSprite
     {
+        int _id = 0;
     public:
-        RabbitSprite(){}
+        explicit RabbitSprite( int id = 0 )
+            : _id( id )
+        {}
 
+        int id() const { return( _id ); }
         void build( int, lcg::Group*, const Resources& );
-        void show( int, int, float );
+        void show( short int, short int, float );
         void hide();
-        void process( float );
 
     private:
         lcg::Sprite* body  = nullptr;
@@ -133,24 +137,21 @@ private: // rabbit
         lcg::Animation bodyAnim;
         lcg::Animation thinkAnim;
 
-    private:
-        bool _free = true;
-
     public:
-        bool checkFree() const { return( _free ); }
+        void setElapsedTime( float );
     };
 
     lcg::Group* rabbitsGroup = nullptr;
     std::vector< RabbitSprite > rabbits;
 
     void giveRabbit( const Rabbit* );
-    void escapedRabbit( int );
 
-public:
-    int giveRabbit( int, int, float );
+//public:
+//    int giveRabbit( int, int, float );
 
 public: // foods
     void setFoods( const Foods& );
+    void changeFood( int, float );
     void hideFood( int );
 
 protected: // process animation of scene
@@ -161,6 +162,7 @@ public:
     bool getActive() const { return( active ); }
     bool getPaused() const { return( !getActive() ); }
     void setPause( bool pause ){ active = !pause; }
+    void restart();
 };
 
 #endif // SCENE_GAME_FIELD_H
