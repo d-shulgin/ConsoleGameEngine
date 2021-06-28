@@ -44,7 +44,7 @@ namespace lcg
 
         ScreenBuffer& refBuffer()
         {
-            if( activeIndex() < buffers.size() )
+            if( static_cast<std::size_t>(activeIndex()) < buffers.size() )
                 return( buffers[activeIndex()] );
             throw( ExceptionEngine(Error::_invalid_ref_ScreenBuffer) );
             return( buffers[0] );
@@ -54,7 +54,7 @@ namespace lcg
     public:
         const ScreenBuffer& buffer() const
         {
-            if( activeIndex() < buffers.size() )
+            if( static_cast<std::size_t>(activeIndex()) < buffers.size() )
                 return( buffers[activeIndex()] );
             throw( ExceptionEngine(Error::_invalid_ref_ScreenBuffer) );
             return( buffers[0] );

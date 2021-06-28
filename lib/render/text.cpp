@@ -49,7 +49,7 @@ namespace lcg
             }
             else if( ch == 0 )
                 break;
-            else if( cl < 0x7ffff )
+            else if( cl < 0x7fff )
                 cl++;
         }
         if( 0 == cl )
@@ -73,7 +73,7 @@ namespace lcg
             {
                 for( int i = 0; i < cols; ++i )
                 {
-                    if( k < v.size() && v[k] != '\n' )
+                    if( static_cast<std::size_t>(k) < v.size() && v[k] != '\n' )
                     {
                         buffer[i+j*cols].Char.UnicodeChar = 0;
                         buffer[i+j*cols].Char.AsciiChar = v[k];

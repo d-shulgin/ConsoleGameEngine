@@ -332,7 +332,7 @@ void GameField::logicFoods()
 // scenes
 bool GameField::onSceneShow( int index )
 {
-    if( index < getScenes().size()
+    if( static_cast<std::size_t>(index) < getScenes().size()
         && getScenes()[index]->getName() == SceneGameOver::class_name()
         && !gameOver() )
         return( false );

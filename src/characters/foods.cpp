@@ -112,7 +112,7 @@ void Foods::logicFoods( float dt, const Snake& snake )
 }
 bool Foods::giveFood( std::vector< lcg::Position >& busy )
 {
-    if( foods.size() < FOODS_MAX_AMOUNT )
+    if( static_cast<int>(foods.size()) < FOODS_MAX_AMOUNT )
     {
         unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::mt19937_64 gen(seed);
@@ -162,7 +162,7 @@ bool Foods::giveApple()
         Apple& apple = (*it);
         foods.push_back( &apple );
     }
-    else if( apples.size() < FOODS_MAX_AMOUNT )
+    else if( static_cast<int>(apples.size()) < FOODS_MAX_AMOUNT )
     {
         apples.push_back( Apple( ++idFood ) );
         foods.push_back( &apples.back() );
@@ -181,7 +181,7 @@ bool Foods::giveRabbit()
         Rabbit& rabbit = (*it);
         foods.push_back( &rabbit );
     }
-    else if( rabbits.size() < FOODS_MAX_AMOUNT )
+    else if( static_cast<int>(rabbits.size()) < FOODS_MAX_AMOUNT )
     {
         rabbits.push_back( Rabbit( ++idFood ) );
         foods.push_back( &rabbits.back() );

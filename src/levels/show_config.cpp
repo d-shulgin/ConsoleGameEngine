@@ -4,7 +4,7 @@ ShowConfig::ShowConfig()
     : lcg::Level()
 {
 }
-void ShowConfig::onInit( lcg::UserInput* input )
+void ShowConfig::onInit( lcg::UserInput* )
 {
 }
 void ShowConfig::onActivate()
@@ -16,7 +16,7 @@ void ShowConfig::prepareDraw()
 }
 bool ShowConfig::onSceneShow( int index )
 {
-    if( index < getScenes().size()
+    if( static_cast<std::size_t>(index) < getScenes().size()
         && getScenes()[index]->getName() == getIgnoreBgrScene() )
         return( false );
     return( true );

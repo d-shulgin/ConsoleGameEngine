@@ -45,7 +45,7 @@ void StartMenu::prepareDraw()
 }
 bool StartMenu::onSceneShow( int index )
 {
-    if( index < getScenes().size()
+    if( static_cast<std::size_t>(index) < getScenes().size()
         && getScenes()[index]->getName() == getIgnoreBgrScene() )
         return( false );
     return( true );

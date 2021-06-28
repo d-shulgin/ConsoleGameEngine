@@ -88,6 +88,7 @@ namespace lcg
     Animation& Animation::addImage( const Image* const image )
     {
         images.push_back( image );
+        return( *this );
     }
     Animation::~Animation()
     {

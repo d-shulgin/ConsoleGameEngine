@@ -26,7 +26,7 @@ namespace lcg
     }
     void Group::removeChildren()
     {
-        for( int i = 0; i < children.size(); ++i )
+        for( std::size_t i = 0; i < children.size(); ++i )
             if( nullptr != children[i] )
                 delete children[i];
         children.clear();
@@ -34,7 +34,7 @@ namespace lcg
     }
     const View* Group::getChild( int index ) const
     {
-        if( index < getChildren().size() )
+        if( static_cast<std::size_t>(index) < getChildren().size() )
             return( getChildren().at( index ) );
         throw( ExceptionEngine(Error::_child_not_found) );
         return( nullptr );

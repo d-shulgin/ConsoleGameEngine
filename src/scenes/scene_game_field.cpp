@@ -246,7 +246,7 @@ void SceneGameField::hideFood( int idFood )
     }
     return;
 }
-void SceneGameField::onProcess( float dt )
+void SceneGameField::onProcess( float )
 {
     if( getPaused() )
         return;

@@ -119,7 +119,7 @@ void Snake::initChain( const lcg::Position& position )
 }
 void Snake::grow()
 {
-    if( chainLinks.size() < LENGTH_MAX )
+    if( static_cast<int>(chainLinks.size()) < LENGTH_MAX )
     {
         chainLinks.push_back( ChainLink() );
         chainLinks.back().setPosition( lastTailPosition );
