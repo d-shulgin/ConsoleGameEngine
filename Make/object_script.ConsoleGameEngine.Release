@@ -46,4 +46,6 @@ INPUT(
 ./release\action_snake_move_right.o
 ./release\foods.o
 ./release\scene_game_over.o
+./release\exception_engine.o
+./release\exception_game.o
 );

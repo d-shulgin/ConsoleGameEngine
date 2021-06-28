@@ -89,7 +89,9 @@ SOURCES       = ..\ConsoleGameEngine\main.cpp \
 		..\ConsoleGameEngine\src\actions\action_snake_move_left.cpp \
 		..\ConsoleGameEngine\src\actions\action_snake_move_right.cpp \
 		..\ConsoleGameEngine\src\characters\foods.cpp \
-		..\ConsoleGameEngine\src\scenes\scene_game_over.cpp 
+		..\ConsoleGameEngine\src\scenes\scene_game_over.cpp \
+		..\ConsoleGameEngine\lib\utils\exception_engine.cpp \
+		..\ConsoleGameEngine\src\exception_game.cpp 
 OBJECTS       = release/main.o \
 		release/game.o \
 		release/core.o \
@@ -136,7 +138,9 @@ OBJECTS       = release/main.o \
 		release/action_snake_move_left.o \
 		release/action_snake_move_right.o \
 		release/foods.o \
-		release/scene_game_over.o
+		release/scene_game_over.o \
+		release/exception_engine.o \
+		release/exception_game.o
 
 DIST          = 
 QMAKE_TARGET  = ConsoleGameEngine
@@ -169,7 +173,7 @@ $(DESTDIR_TARGET):  $(OBJECTS)
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.ConsoleGameEngine.Release  $(LIBS)
 
 qmake: FORCE
-	@$(QMAKE) -spec win32-g++ CONFIG+=debug -o Makefile.Release ..\ConsoleGameEngine\ConsoleGameEngine.pro
+	@$(QMAKE) -spec win32-g++ -o Makefile.Release ..\ConsoleGameEngine\ConsoleGameEngine.pro
 
 qmake_all: FORCE
 
@@ -177,7 +181,7 @@ dist:
 	$(ZIP) ConsoleGameEngine.zip $(SOURCES) $(DIST) ..\ConsoleGameEngine\ConsoleGameEngine.pro C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\spec_pre.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\qdevice.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\device_config.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\common\shell-win32.conf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\qconfig.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_declarative.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_declarative_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_enginio.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_enginio_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_platformsupport_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_script.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_script_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_scripttools.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_scripttools_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_webkit.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_webkit_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_webkitwidgets.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\qt_functions.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\qt_config.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\win32\qt_config.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\win32-g++\qmake.conf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\spec_post.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\default_pre.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\resolve_config.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\default_post.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\build_pass.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\c++11.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\win32\console.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\win32\rtti.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\precompile_header.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\warn_on.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\exceptions.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\yacc.prf C:\Qt\Qt5.3.1\5.3\mingw482_32\mkspecs\features\lex.prf ..\ConsoleGameEngine\ConsoleGameEngine.pro  NO_PCH_SOURCES YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\game.o release\core.o release\surface.o release\screen_buffer.o release\scene.o release\group.o release\view.o release\text.o release\position.o release\sprite.o release\image.o release\animation.o release\fps_counter.o release\level.o release\start_app.o release\scene_start.o release\scene_builder.o release\game_state.o release\snake_state.o release\action.o release\action_start_menu.o release\vkey.o release\keyboard_shortcut.o release\user_input.o release\scene_debug.o release\start_menu.o release\scene_menu.o release\action_select_item_up.o release\action_select_item_down.o release\action_choice_item.o release\scene_config.o release\show_config.o release\action_comeback_from_config.o release\scene_game_field.o release\game_field.o release\action_main_menu.o release\food.o release\rabbit.o release\apple.o release\snake.o release\action_snake_move_up.o release\action_snake_move_down.o release\action_snake_move_left.o release\action_snake_move_right.o release\foods.o release\scene_game_over.o
+	-$(DEL_FILE) release\main.o release\game.o release\core.o release\surface.o release\screen_buffer.o release\scene.o release\group.o release\view.o release\text.o release\position.o release\sprite.o release\image.o release\animation.o release\fps_counter.o release\level.o release\start_app.o release\scene_start.o release\scene_builder.o release\game_state.o release\snake_state.o release\action.o release\action_start_menu.o release\vkey.o release\keyboard_shortcut.o release\user_input.o release\scene_debug.o release\start_menu.o release\scene_menu.o release\action_select_item_up.o release\action_select_item_down.o release\action_choice_item.o release\scene_config.o release\show_config.o release\action_comeback_from_config.o release\scene_game_field.o release\game_field.o release\action_main_menu.o release\food.o release\rabbit.o release\apple.o release\snake.o release\action_snake_move_up.o release\action_snake_move_down.o release\action_snake_move_left.o release\action_snake_move_right.o release\foods.o release\scene_game_over.o release\exception_engine.o release\exception_game.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -208,6 +212,7 @@ release/main.o: ../ConsoleGameEngine/main.cpp ../ConsoleGameEngine/src/game.h \
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -242,6 +247,7 @@ release/main.o: ../ConsoleGameEngine/main.cpp ../ConsoleGameEngine/src/game.h \
 		../ConsoleGameEngine/src/scenes/package.h \
 		../ConsoleGameEngine/src/scenes/scene_start.h \
 		../ConsoleGameEngine/src/scenes/scene_menu.h \
+		../ConsoleGameEngine/src/exception_game.h \
 		../ConsoleGameEngine/src/scenes/scene_config.h \
 		../ConsoleGameEngine/src/scenes/scene_game_field.h \
 		../ConsoleGameEngine/src/scenes/scene_game_over.h \
@@ -261,6 +267,7 @@ release/game.o: ../ConsoleGameEngine/src/game.cpp ../ConsoleGameEngine/src/game.
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -295,6 +302,7 @@ release/game.o: ../ConsoleGameEngine/src/game.cpp ../ConsoleGameEngine/src/game.
 		../ConsoleGameEngine/src/scenes/package.h \
 		../ConsoleGameEngine/src/scenes/scene_start.h \
 		../ConsoleGameEngine/src/scenes/scene_menu.h \
+		../ConsoleGameEngine/src/exception_game.h \
 		../ConsoleGameEngine/src/scenes/scene_config.h \
 		../ConsoleGameEngine/src/scenes/scene_game_field.h \
 		../ConsoleGameEngine/src/scenes/scene_game_over.h \
@@ -312,6 +320,7 @@ release/core.o: ../ConsoleGameEngine/lib/core.cpp ../ConsoleGameEngine/lib/core.
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -325,11 +334,13 @@ release/surface.o: ../ConsoleGameEngine/lib/surface.cpp ../ConsoleGameEngine/lib
 		../ConsoleGameEngine/lib/types/color.h \
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
-		../ConsoleGameEngine/lib/types/position.h
+		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\surface.o ..\ConsoleGameEngine\lib\surface.cpp
 
 release/screen_buffer.o: ../ConsoleGameEngine/lib/surface/screen_buffer.cpp ../ConsoleGameEngine/lib/surface/screen_buffer.h \
-		../ConsoleGameEngine/lib/types/color.h
+		../ConsoleGameEngine/lib/types/color.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\screen_buffer.o ..\ConsoleGameEngine\lib\surface\screen_buffer.cpp
 
 release/scene.o: ../ConsoleGameEngine/lib/render/scene.cpp ../ConsoleGameEngine/lib/render/scene.h \
@@ -343,7 +354,8 @@ release/group.o: ../ConsoleGameEngine/lib/render/group.cpp ../ConsoleGameEngine/
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
 		../ConsoleGameEngine/lib/surface/screen_buffer.h \
-		../ConsoleGameEngine/lib/types/color.h
+		../ConsoleGameEngine/lib/types/color.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\group.o ..\ConsoleGameEngine\lib\render\group.cpp
 
 release/view.o: ../ConsoleGameEngine/lib/render/view.cpp ../ConsoleGameEngine/lib/render/view.h \
@@ -375,7 +387,8 @@ release/image.o: ../ConsoleGameEngine/lib/types/image.cpp ../ConsoleGameEngine/l
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\image.o ..\ConsoleGameEngine\lib\types\image.cpp
 
 release/animation.o: ../ConsoleGameEngine/lib/game/animation.cpp ../ConsoleGameEngine/lib/game/animation.h \
-		../ConsoleGameEngine/lib/types/image.h
+		../ConsoleGameEngine/lib/types/image.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\animation.o ..\ConsoleGameEngine\lib\game\animation.cpp
 
 release/fps_counter.o: ../ConsoleGameEngine/lib/utils/fps_counter.cpp ../ConsoleGameEngine/lib/utils/fps_counter.h
@@ -403,6 +416,7 @@ release/start_app.o: ../ConsoleGameEngine/src/levels/start_app.cpp ../ConsoleGam
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -428,6 +442,7 @@ release/scene_start.o: ../ConsoleGameEngine/src/scenes/scene_start.cpp ../Consol
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -462,7 +477,8 @@ release/game_state.o: ../ConsoleGameEngine/lib/game/game_state.cpp ../ConsoleGam
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/input/keyboard_shortcut.h \
-		../ConsoleGameEngine/lib/input/vkey.h
+		../ConsoleGameEngine/lib/input/vkey.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\game_state.o ..\ConsoleGameEngine\lib\game\game_state.cpp
 
 release/snake_state.o: ../ConsoleGameEngine/src/snake_state.cpp ../ConsoleGameEngine/src/snake_state.h \
@@ -474,6 +490,7 @@ release/snake_state.o: ../ConsoleGameEngine/src/snake_state.cpp ../ConsoleGameEn
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -527,6 +544,7 @@ release/action_start_menu.o: ../ConsoleGameEngine/src/actions/action_start_menu.
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -559,7 +577,8 @@ release/user_input.o: ../ConsoleGameEngine/lib/input/user_input.cpp ../ConsoleGa
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
 		../ConsoleGameEngine/lib/input/keyboard_shortcut.h \
-		../ConsoleGameEngine/lib/input/vkey.h
+		../ConsoleGameEngine/lib/input/vkey.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\user_input.o ..\ConsoleGameEngine\lib\input\user_input.cpp
 
 release/scene_debug.o: ../ConsoleGameEngine/src/scenes/scene_debug.cpp ../ConsoleGameEngine/src/scenes/scene_debug.h \
@@ -571,6 +590,7 @@ release/scene_debug.o: ../ConsoleGameEngine/src/scenes/scene_debug.cpp ../Consol
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -595,6 +615,7 @@ release/start_menu.o: ../ConsoleGameEngine/src/levels/start_menu.cpp ../ConsoleG
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -610,7 +631,8 @@ release/start_menu.o: ../ConsoleGameEngine/src/levels/start_menu.cpp ../ConsoleG
 		../ConsoleGameEngine/lib/utils/fps_counter.h \
 		../ConsoleGameEngine/src/actions/action_select_item_up.h \
 		../ConsoleGameEngine/src/actions/action_select_item_down.h \
-		../ConsoleGameEngine/src/scenes/scene_menu.h
+		../ConsoleGameEngine/src/scenes/scene_menu.h \
+		../ConsoleGameEngine/src/exception_game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\start_menu.o ..\ConsoleGameEngine\src\levels\start_menu.cpp
 
 release/scene_menu.o: ../ConsoleGameEngine/src/scenes/scene_menu.cpp ../ConsoleGameEngine/src/scenes/scene_menu.h \
@@ -622,6 +644,7 @@ release/scene_menu.o: ../ConsoleGameEngine/src/scenes/scene_menu.cpp ../ConsoleG
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -634,7 +657,8 @@ release/scene_menu.o: ../ConsoleGameEngine/src/scenes/scene_menu.cpp ../ConsoleG
 		../ConsoleGameEngine/lib/render/sprite.h \
 		../ConsoleGameEngine/lib/game/animation.h \
 		../ConsoleGameEngine/lib/game/game_state.h \
-		../ConsoleGameEngine/lib/utils/fps_counter.h
+		../ConsoleGameEngine/lib/utils/fps_counter.h \
+		../ConsoleGameEngine/src/exception_game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\scene_menu.o ..\ConsoleGameEngine\src\scenes\scene_menu.cpp
 
 release/action_select_item_up.o: ../ConsoleGameEngine/src/actions/action_select_item_up.cpp ../ConsoleGameEngine/src/actions/action_select_item_up.h \
@@ -646,6 +670,7 @@ release/action_select_item_up.o: ../ConsoleGameEngine/src/actions/action_select_
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -670,6 +695,7 @@ release/action_select_item_down.o: ../ConsoleGameEngine/src/actions/action_selec
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -694,6 +720,7 @@ release/action_choice_item.o: ../ConsoleGameEngine/src/actions/action_choice_ite
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -718,6 +745,7 @@ release/scene_config.o: ../ConsoleGameEngine/src/scenes/scene_config.cpp ../Cons
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -742,6 +770,7 @@ release/show_config.o: ../ConsoleGameEngine/src/levels/show_config.cpp ../Consol
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -766,6 +795,7 @@ release/action_comeback_from_config.o: ../ConsoleGameEngine/src/actions/action_c
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -790,6 +820,7 @@ release/scene_game_field.o: ../ConsoleGameEngine/src/scenes/scene_game_field.cpp
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -819,6 +850,7 @@ release/game_field.o: ../ConsoleGameEngine/src/levels/game_field.cpp ../ConsoleG
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -843,6 +875,7 @@ release/game_field.o: ../ConsoleGameEngine/src/levels/game_field.cpp ../ConsoleG
 		../ConsoleGameEngine/src/actions/action_snake_move_left.h \
 		../ConsoleGameEngine/src/actions/action_snake_move_right.h \
 		../ConsoleGameEngine/src/scenes/scene_game_field.h \
+		../ConsoleGameEngine/src/scenes/scene_game_over.h \
 		../ConsoleGameEngine/src/scenes/scene_debug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\game_field.o ..\ConsoleGameEngine\src\levels\game_field.cpp
 
@@ -855,6 +888,7 @@ release/action_main_menu.o: ../ConsoleGameEngine/src/actions/action_main_menu.cp
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -879,6 +913,7 @@ release/food.o: ../ConsoleGameEngine/src/characters/food.cpp ../ConsoleGameEngin
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -904,6 +939,7 @@ release/rabbit.o: ../ConsoleGameEngine/src/characters/rabbit.cpp ../ConsoleGameE
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -929,6 +965,7 @@ release/apple.o: ../ConsoleGameEngine/src/characters/apple.cpp ../ConsoleGameEng
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -953,6 +990,7 @@ release/snake.o: ../ConsoleGameEngine/src/characters/snake.cpp ../ConsoleGameEng
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -977,6 +1015,7 @@ release/action_snake_move_up.o: ../ConsoleGameEngine/src/actions/action_snake_mo
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -1001,6 +1040,7 @@ release/action_snake_move_down.o: ../ConsoleGameEngine/src/actions/action_snake_
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -1025,6 +1065,7 @@ release/action_snake_move_left.o: ../ConsoleGameEngine/src/actions/action_snake_
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -1049,6 +1090,7 @@ release/action_snake_move_right.o: ../ConsoleGameEngine/src/actions/action_snake
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -1073,6 +1115,7 @@ release/foods.o: ../ConsoleGameEngine/src/characters/foods.cpp ../ConsoleGameEng
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -1101,6 +1144,7 @@ release/scene_game_over.o: ../ConsoleGameEngine/src/scenes/scene_game_over.cpp .
 		../ConsoleGameEngine/lib/render/scene.h \
 		../ConsoleGameEngine/lib/render/view.h \
 		../ConsoleGameEngine/lib/types/position.h \
+		../ConsoleGameEngine/lib/utils/exception_engine.h \
 		../ConsoleGameEngine/lib/input/user_input.h \
 		../ConsoleGameEngine/lib/game/action.h \
 		../ConsoleGameEngine/lib/game/level.h \
@@ -1115,6 +1159,12 @@ release/scene_game_over.o: ../ConsoleGameEngine/src/scenes/scene_game_over.cpp .
 		../ConsoleGameEngine/lib/game/game_state.h \
 		../ConsoleGameEngine/lib/utils/fps_counter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\scene_game_over.o ..\ConsoleGameEngine\src\scenes\scene_game_over.cpp
+
+release/exception_engine.o: ../ConsoleGameEngine/lib/utils/exception_engine.cpp ../ConsoleGameEngine/lib/utils/exception_engine.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\exception_engine.o ..\ConsoleGameEngine\lib\utils\exception_engine.cpp
+
+release/exception_game.o: ../ConsoleGameEngine/src/exception_game.cpp ../ConsoleGameEngine/src/exception_game.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\exception_game.o ..\ConsoleGameEngine\src\exception_game.cpp
 
 ####### Install
 
