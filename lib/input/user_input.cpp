@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
+#include "../utils/exception_engine.h"
 
 namespace lcg
 {
@@ -19,7 +20,7 @@ namespace lcg
         }
         return;
     }
-    UserInput&UserInput::attach( Action* action )
+    UserInput& UserInput::attach( Action* action )
     {
         if( nullptr != action )
         {
@@ -34,7 +35,8 @@ namespace lcg
                       return(false); } );
             if( it != _actions.end() )
             {
-                /// @todo: throw
+                throw( ExceptionEngine(Error::_action_already_exists) );
+                return( *this );
             }
             else
                 _actions.push_back( action );

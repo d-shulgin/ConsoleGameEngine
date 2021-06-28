@@ -20,6 +20,7 @@ int main()
 //    SetLocaleInfoA(locale, LOCALE_SLOCALIZEDCOUNTRYNAME, "ru-Ru" );
 
     // launch Game
+    try
     {
         Game game( 120, 50 );
         game.init( lcg::SurfaceInitFlag::withDoubleBuffer );
@@ -31,6 +32,10 @@ int main()
             game.draw();
             game.postProcess();
         }
+    }
+    catch( std::exception& e )
+    {
+        std::cout << "[Ooops... ] " << e.what() << std::endl;
     }
     std::cout << "Game completed..." << std::endl;
     Sleep( 1000 );

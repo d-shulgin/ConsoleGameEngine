@@ -1,6 +1,7 @@
 #include "group.h"
 #include <iostream>
 #include <algorithm>
+#include "../utils/exception_engine.h"
 
 namespace lcg
 {
@@ -35,7 +36,7 @@ namespace lcg
     {
         if( index < getChildren().size() )
             return( getChildren().at( index ) );
-        /// @todo: need throw
+        throw( ExceptionEngine(Error::_child_not_found) );
         return( nullptr );
     }
     const View* Group::getChild( const std::string& name ) const
@@ -45,7 +46,7 @@ namespace lcg
                                 , [&name](View* item)->bool{ return( item->getName() == name ); } );
         if( it != getChildren().end() )
             return( *it );
-        /// @todo: need throw
+        throw( ExceptionEngine(Error::_child_not_found) );
         return( nullptr );
     }
     void Group::addChild( View* const child )

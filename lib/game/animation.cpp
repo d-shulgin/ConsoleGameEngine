@@ -1,4 +1,5 @@
 #include "animation.h"
+#include "../utils/exception_engine.h"
 
 namespace lcg
 {
@@ -81,7 +82,7 @@ namespace lcg
     {
         if( getFrame() < getImages().size() )
             return( getImages()[getFrame()] );
-        /// @todo: need throw
+        throw( ExceptionEngine(Error::_invalid_frame_animation) );
         return( nullptr );
     }
     Animation& Animation::addImage( const Image* const image )

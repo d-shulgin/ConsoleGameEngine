@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "../../lib/engine.h"
+#include "../exception_game.h"
 
 class SceneMenu final : public lcg::SceneBuilder
 {
@@ -94,7 +95,8 @@ private: // Advice
     {
         if( static_cast<std::size_t>(tipSelected) < tipStrings.size() )
             return( tipStrings[tipSelected] );
-        /// @todo: throw
+        throw( snake::Exception(snake::Error::_tips_not_found) );
+        return( tipStrings[0] );
     }
 
 protected: // process animation of scene

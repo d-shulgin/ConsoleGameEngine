@@ -72,31 +72,6 @@ namespace lcg
 
     public: // render functions
         void put( const CHAR_INFO* buffer, COORD size, COORD pos );
-
-
-
-
-
-
-//    private: // maximum buffer size
-//        BufferSize _size;
-//    public:
-//        const BufferSize& maxSize() const { return( _size ); }
-//    private: // screen size
-//        ScreenBufferSize _scrSize;
-//        ScreenBufferSize _maxSize;
-//    public:
-//        const ScreenBufferSize& screenSize() const { return( _scrSize ); }
-//        const ScreenBufferSize& screenMaxSize() const { return( _maxSize ); }
-//    private: // data screen buffer
-//        CHAR_INFO* _data = nullptr;
-//        void createData();
-//        void releaseData();
-//    public:
-//        const CHAR_INFO* data() const { return( _data ); }
-//        const ScreenBufferSize& size() const { return( screenSize() ); }
-//        void clear();
-//        void put( int, char, ColorID = ColorID::white, ColorID = ColorID::black );
     };
 }
 

@@ -1,6 +1,7 @@
 #include "core.h"
 #include <iostream>
 #include <iomanip>
+#include "utils/exception_engine.h"
 
 namespace lcg
 {
@@ -14,7 +15,8 @@ namespace lcg
         hConsole = GetStdHandle( STD_OUTPUT_HANDLE );
         if( nullptr == hConsole || INVALID_HANDLE_VALUE == hConsole )
         {
-            /// @todo: need throw
+            throw( ExceptionEngine(Error::_invalid_handle_StdOutputDevide) );
+            return;
         }
         else
         {
@@ -53,14 +55,15 @@ namespace lcg
     }
     void Core::draw()
     {
+        const int MAX_COUNT_RENDERED_SCREENS = 1000;
         onPrepareDraw();
         countScenesRendered = 0;
         while( surface.render(getScene()) )
         {
             countScenesRendered++;
-            if( countScenesRendered > 1000 ) /// @todo: magic number
+            if( countScenesRendered > MAX_COUNT_RENDERED_SCREENS )
             {
-                /// @todo: need throw
+                throw( ExceptionEngine(Error::_limit_rendering_scenes) );
                 break;
             }
         }

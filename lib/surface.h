@@ -11,6 +11,7 @@
 #include <windowsx.h>
 #include "surface/screen_buffer.h"
 #include "render/scene.h"
+#include "utils/exception_engine.h"
 
 namespace lcg
 {
@@ -45,7 +46,8 @@ namespace lcg
         {
             if( activeIndex() < buffers.size() )
                 return( buffers[activeIndex()] );
-            /// @todo: need throw
+            throw( ExceptionEngine(Error::_invalid_ref_ScreenBuffer) );
+            return( buffers[0] );
         }
         void changeActiveBuffer();
 
@@ -54,36 +56,14 @@ namespace lcg
         {
             if( activeIndex() < buffers.size() )
                 return( buffers[activeIndex()] );
-            /// @todo: need throw
+            throw( ExceptionEngine(Error::_invalid_ref_ScreenBuffer) );
+            return( buffers[0] );
         }
 
     public:
         void swapBuffers();
         bool render( const Scene* const );
 
-
-
-
-
-
-
-
-
-//    public: // current screen size
-//        const ScreenBufferSize& size() const
-//        {
-//            return( buffer().screenSize() );
-//        }
-//    private: // color
-//        ColorID foregroundColor = ColorID::black; /// @todo: need Pen class
-//        ColorID backgroundColor = ColorID::black; /// @todo: need Background class
-//    public:
-//        const ColorID& fgColor() const { return( foregroundColor ); }
-//        const ColorID& bgColor() const { return( backgroundColor ); }
-//        void setFgColor( ColorID color ){ foregroundColor = color; }
-//        void setBgColor( ColorID color ){ backgroundColor = color; }
-//    public: // draw
-//        void putText( int, int, const char* );
     };
 }
 
