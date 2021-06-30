@@ -33,7 +33,7 @@ private: // foods
 
     void processFoods( float );
     void logicFoods( float, const Snake& );
-    bool giveFood( std::vector< lcg::Position >&, std::ofstream* file = nullptr );
+    bool giveFood( std::vector< lcg::Position >& );
 
 public:
     const std::list< Food* >& getFoods() const { return( foods ); }
