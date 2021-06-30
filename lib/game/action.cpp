@@ -25,17 +25,48 @@ namespace lcg
     }
     void Action::process()
     {
-        processed = getPressed();
-        if( !onProcess() )
+        if( getActive() )
         {
             if( nullptr != handler )
             {
-                if( processed )
-                    handler -> onPress();
+                if( getPressed() )
+                {
+                    if( !getProcessed() )
+                    {
+                        processed = true;
+                        handler -> onPress();
+                    }
+                    else
+                        handler -> onPressed();
+                }
                 else
-                    handler -> onRelease();
+                {
+                    if( getProcessed() )
+                    {
+                        processed = false;
+                        handler -> onRelease();
+                    }
+                }
             }
         }
+
+//        processed = getPressed();
+//        if( !onProcess() )
+//        {
+//            if( nullptr != handler )
+//            {
+//                if( processed )
+//                    handler -> onPress();
+//                else
+//                    handler -> onRelease();
+//            }
+//        }
+
+
+//            if( action->getActive() && action->getPressed() && !action->getProcessed() )
+//                action->process();
+//            else if( action->getActive() && action->getReleased() && action->getProcessed() )
+//                action->process();
         return;
     }
     Action::~Action()

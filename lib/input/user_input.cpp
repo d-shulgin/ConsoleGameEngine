@@ -13,10 +13,11 @@ namespace lcg
     {
         for( Action* action: _actions )
         {
-            if( action->getActive() && action->getPressed() && !action->getProcessed() )
-                action->process();
-            else if( action->getActive() && action->getReleased() && action->getProcessed() )
-                action->process();
+            action -> process();
+//            if( action->getActive() && action->getPressed() && !action->getProcessed() )
+//                action->process();
+//            else if( action->getActive() && action->getReleased() && action->getProcessed() )
+//                action->process();
         }
         return;
     }

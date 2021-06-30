@@ -212,11 +212,16 @@ private: // actions
         {}
         virtual void onPress() override
         {
+            if( nullptr != obj )
+                fnPress( *obj );
         }
-        virtual void onRelease() override
+        virtual void onPressed() override
         {
             if( nullptr != obj )
                 fnPress( *obj );
+        }
+        virtual void onRelease() override
+        {
         }
         void setFnPress( GameField* o, std::function<void(GameField&)> fn )
         {
@@ -235,11 +240,16 @@ private: // actions
         {}
         virtual void onPress() override
         {
+            if( nullptr != obj )
+                fnPress( *obj );
         }
-        virtual void onRelease() override
+        virtual void onPressed() override
         {
             if( nullptr != obj )
                 fnPress( *obj );
+        }
+        virtual void onRelease() override
+        {
         }
         void setFnPress( GameField* o, std::function<void(GameField&)> fn )
         {
@@ -258,11 +268,16 @@ private: // actions
         {}
         virtual void onPress() override
         {
+            if( nullptr != obj )
+                fnPress( *obj );
         }
-        virtual void onRelease() override
+        virtual void onPressed() override
         {
             if( nullptr != obj )
                 fnPress( *obj );
+        }
+        virtual void onRelease() override
+        {
         }
         void setFnPress( GameField* o, std::function<void(GameField&)> fn )
         {
@@ -281,11 +296,16 @@ private: // actions
         {}
         virtual void onPress() override
         {
+            if( nullptr != obj )
+                fnPress( *obj );
         }
-        virtual void onRelease() override
+        virtual void onPressed() override
         {
             if( nullptr != obj )
                 fnPress( *obj );
+        }
+        virtual void onRelease() override
+        {
         }
         void setFnPress( GameField* o, std::function<void(GameField&)> fn )
         {

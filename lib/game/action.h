@@ -86,6 +86,7 @@ namespace lcg
 
             virtual void onPress() = 0;
             virtual void onRelease() = 0;
+            virtual void onPressed(){}
         };
 
     private:

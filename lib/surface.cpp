@@ -44,32 +44,6 @@ namespace lcg
         }
         return( false );
     }
-
-
-
-
-
-
-
-//    void Surface::putText( int x, int y, const char* text )
-//    {
-//        int w = buffer().screenSize().width - x;
-//        int l = static_cast<int>(strlen(text));
-//        int offset = y*buffer().screenSize().width;
-//        if( ( x >= 0 && x < buffer().screenSize().width )
-//            && ( y >= 0 && y < buffer().screenSize().height ) )
-//        {
-//            int k = 0;
-//            while( k < l && k < w )
-//            {
-//                char ch = *(text + k);
-//                int i = x + k + offset;
-//                refBuffer().put( i, ch, fgColor(), bgColor() );
-//                k++;
-//            }
-//        }
-//        return;
-//    }
     Surface::~Surface()
     {
     }
